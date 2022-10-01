@@ -1,9 +1,11 @@
-# Fabric Example Mod
+## This mod is currently in Early Alpha Stage! Not really usable yet with currently only the skill point unlock system fully implemented.
 
-## Setup
+# You've got a Skill Issue
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+## Info
+
+You've got a Skill Issue is a Minecraft Server-side mod Implementing a new skill system with a custom skill tree and amazing abilites to assist you when playing!
 
 ## License
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+This project is under the LGPL-3 License
