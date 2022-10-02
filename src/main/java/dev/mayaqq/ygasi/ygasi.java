@@ -10,6 +10,7 @@ public class ygasi implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		StatRegistry.skillRegister();
+		CommandRegistry.RegisterCommands();
 		LOGGER.info("You've got a skill issue!");
 	}
 }
