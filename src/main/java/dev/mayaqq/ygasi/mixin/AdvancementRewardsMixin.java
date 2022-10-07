@@ -1,5 +1,6 @@
 package dev.mayaqq.ygasi.mixin;
 
+import dev.mayaqq.ygasi.config.ConfigData;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -10,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static dev.mayaqq.ygasi.StatRegistry.SKILL_POINTS;
+import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 import static dev.mayaqq.ygasi.ygasi.LOGGER;
 
 @Mixin(AdvancementRewards.class)

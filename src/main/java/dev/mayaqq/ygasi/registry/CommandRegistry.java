@@ -1,4 +1,4 @@
-package dev.mayaqq.ygasi;
+package dev.mayaqq.ygasi.registry;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -8,7 +8,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 
-import static dev.mayaqq.ygasi.StatRegistry.SKILL_POINTS;
+import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class CommandRegistry {

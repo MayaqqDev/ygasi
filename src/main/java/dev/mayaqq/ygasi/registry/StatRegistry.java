@@ -1,4 +1,4 @@
-package dev.mayaqq.ygasi;
+package dev.mayaqq.ygasi.registry;
 
 import eu.pb4.polymer.api.other.PolymerStat;
 import net.minecraft.stat.StatFormatter;
