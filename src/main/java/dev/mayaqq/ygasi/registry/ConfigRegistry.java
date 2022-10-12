@@ -2,52 +2,78 @@ package dev.mayaqq.ygasi.registry;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dev.mayaqq.ygasi.config.ConfigData;
-import dev.mayaqq.ygasi.config.ModData;
+import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-
-import static dev.mayaqq.ygasi.ygasi.LOGGER;
+import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConfigRegistry {
-    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    private static ConfigData CONFIG;
-    private static ModData DATA;
 
-    public static ConfigData getConfig() {
-        return CONFIG;
-    }
+    public static Config CONFIG = new Config();
+    public static ServerData SERVERDATA = new ServerData();
 
-    public static boolean loadConfig() {
-        boolean success = false;
-        Charset charSet = StandardCharsets.UTF_8;
+    private static File modConfFolder = new File(FabricLoader.getInstance().getConfigDir().toFile(),"ygasi");
+    private static File configFile = new File(modConfFolder,"config.json");
+    private static File serverDatFile = new File(modConfFolder,"serverDat.json");
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        CONFIG = null;
-        try {
-            File configDir = Paths.get("", "config", "ygasi").toFile();
-            File dataDir = Paths.get("", "config", "ygasi", "data").toFile();
-            dataDir.mkdirs();
-            File configFile = new File(configDir, "config.json");
-            File dataFile = new File(dataDir, "data.json");
-
-            ConfigData configData = configFile.exists() ? GSON.fromJson(new InputStreamReader(new FileInputStream(configFile), charSet), ConfigData.class) : new ConfigData();
-            ModData modData = dataFile.exists() ? GSON.fromJson(new InputStreamReader(new FileInputStream(dataFile), charSet), ModData.class) : new ModData();
-
-            CONFIG = new ConfigData();
-
-            BufferedWriter configWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile), charSet));
-            BufferedWriter dataWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dataFile), charSet));
-            dataWriter.write(GSON.toJson(modData));
-            configWriter.write(GSON.toJson(configData));
-            configWriter.close();
-            dataWriter.close();
-        } catch (IOException e ) {
-            LOGGER.error(String.valueOf(e));
+    public static void load() {
+        //we do bunch of checking here mainly if the file exists
+        if (!modConfFolder.exists()) {
+            modConfFolder.mkdir();
         }
-        return success;
+
+        if (!configFile.exists()) {
+            try {
+                configFile.createNewFile();
+                saveConfig();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                CONFIG = gson.fromJson(new FileReader(configFile), Config.class);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (!serverDatFile.exists()) {
+            try {
+                serverDatFile.createNewFile();
+                saveServerData();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                SERVERDATA = gson.fromJson(new FileReader(serverDatFile), ServerData.class);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
+    public static void saveConfig() throws IOException {
+        //Write some info into the file under here
+        var writer = new FileWriter(configFile);
+        writer.write(gson.toJson(CONFIG));
+        writer.close();
+    }
+    public static void saveServerData() throws IOException {
+        var Writer = new FileWriter(serverDatFile);
+        Writer.write(gson.toJson(SERVERDATA));
+        Writer.close();
+    }
+    public static class Config {
+        //the thing to write in the config file
+        public int pointsRewarded = 1;
+        public Config() {}
+    }
+    public static class ServerData {
+        //the things to write in the serverData file, this is only temporary for now
+        public String Comment = "This File should store all the data for the players when they open the gui. Maybe this will get removed when I learn SQL? (never)";
+        public ServerData() {}
+    }
 }

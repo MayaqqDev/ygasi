@@ -1,6 +1,6 @@
 package dev.mayaqq.ygasi.mixin;
 
-import dev.mayaqq.ygasi.config.ConfigData;
+import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import net.minecraft.advancement.AdvancementRewards;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -21,8 +21,7 @@ public class AdvancementRewardsMixin {
     @Inject(method = "apply",at = @At("HEAD"))
     private void inject(ServerPlayerEntity player, CallbackInfo ci) {
         if (recipes.length == 0) {
-            LOGGER.info("Skill point unlocked");
-            player.increaseStat(SKILL_POINTS, 1);
+            player.increaseStat(SKILL_POINTS, ConfigRegistry.CONFIG.pointsRewarded);
         }
     }
 }

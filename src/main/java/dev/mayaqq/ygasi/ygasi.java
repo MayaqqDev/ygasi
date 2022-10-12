@@ -16,7 +16,7 @@ public class ygasi implements ModInitializer {
 	public void onInitialize() {
 		StatRegistry.skillRegister();
 		CommandRegistry.RegisterCommands();
-		ConfigRegistry.loadConfig();
+		ConfigRegistry.load();
 		LOGGER.info("You've got a skill issue!");
 	}
 }

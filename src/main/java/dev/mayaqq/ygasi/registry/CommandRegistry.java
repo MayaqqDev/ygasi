@@ -1,6 +1,7 @@
 package dev.mayaqq.ygasi.registry;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import dev.mayaqq.ygasi.util.updatePlayerData;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
@@ -15,8 +16,7 @@ public class CommandRegistry {
     public static void RegisterCommands() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("skilltree")
                 .executes(context -> {
-                    context.getSource().sendMessage(Text.literal("Surely this opened a skilltree that is definitely implemented..."));
-
+                    updatePlayerData.createPlayerData(context.getSource().getPlayerOrThrow().getUuid());
                     return 1;
                 })));
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("ygasi")
