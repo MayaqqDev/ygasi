@@ -17,6 +17,7 @@ public class ygasi implements ModInitializer {
 		StatRegistry.skillRegister();
 		CommandRegistry.RegisterCommands();
 		ConfigRegistry.load();
+		CreatePlayerData.load();
 		LOGGER.info("You've got a skill issue!");
 	}
 }

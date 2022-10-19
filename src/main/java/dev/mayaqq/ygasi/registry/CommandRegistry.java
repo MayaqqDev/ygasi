@@ -1,13 +1,15 @@
 package dev.mayaqq.ygasi.registry;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import dev.mayaqq.ygasi.util.updatePlayerData;
+import dev.mayaqq.ygasi.CreatePlayerData;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
+
+import java.io.IOException;
 
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -16,7 +18,12 @@ public class CommandRegistry {
     public static void RegisterCommands() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("skilltree")
                 .executes(context -> {
-                    updatePlayerData.createPlayerData(context.getSource().getPlayerOrThrow().getUuid());
+                    try {
+                        CreatePlayerData.createPlayerData(context.getSource().getPlayerOrThrow().getUuid());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    context.getSource().sendMessage(Text.literal("§aSkillData Registered!"));
                     return 1;
                 })));
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("ygasi")
