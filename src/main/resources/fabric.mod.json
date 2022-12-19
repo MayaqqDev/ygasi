@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.mayaqq.ygasi.ygasi"
+      "dev.mayaqq.ygasi.Ygasi"
     ]
   },
   "mixins": [

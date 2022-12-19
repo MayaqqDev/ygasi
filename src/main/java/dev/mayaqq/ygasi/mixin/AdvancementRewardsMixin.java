@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
-import static dev.mayaqq.ygasi.ygasi.LOGGER;
 
 @Mixin(AdvancementRewards.class)
 public class AdvancementRewardsMixin {

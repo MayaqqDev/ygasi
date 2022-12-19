@@ -7,9 +7,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
-public class ygasi implements ModInitializer {
+public class Ygasi implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("ygasi");
 
 	@Override
@@ -17,7 +15,6 @@ public class ygasi implements ModInitializer {
 		StatRegistry.skillRegister();
 		CommandRegistry.RegisterCommands();
 		ConfigRegistry.load();
-		CreatePlayerData.load();
 		LOGGER.info("You've got a skill issue!");
 	}
 }

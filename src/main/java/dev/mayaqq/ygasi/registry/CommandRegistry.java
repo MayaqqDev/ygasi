@@ -1,15 +1,15 @@
 package dev.mayaqq.ygasi.registry;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import dev.mayaqq.ygasi.CreatePlayerData;
+import com.mojang.brigadier.context.CommandContext;
+import dev.mayaqq.ygasi.gui.BranchGui;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
-
-import java.io.IOException;
 
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -18,14 +18,32 @@ public class CommandRegistry {
     public static void RegisterCommands() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("skilltree")
                 .executes(context -> {
-                    try {
-                        CreatePlayerData.createPlayerData(context.getSource().getPlayerOrThrow().getUuid());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    context.getSource().sendMessage(Text.literal("§aSkillData Registered!"));
+                    ServerPlayerEntity player = context.getSource().getPlayer();
+                    BranchGui.gui(player);
                     return 1;
-                })));
+                })
+                    .then(literal("Mercenary")
+                            .executes(context -> {
+                                ServerPlayerEntity player = context.getSource().getPlayer();
+                                BranchGui.gui(player);
+                                return 1;
+                            })
+                    )
+                    .then(literal("Wizardry")
+                            .executes(context -> {
+                                ServerPlayerEntity player = context.getSource().getPlayer();
+                                BranchGui.gui(player);
+                                return 1;
+                            })
+                )
+                .then(literal("Druidry")
+                        .executes(context -> {
+                            ServerPlayerEntity player = context.getSource().getPlayer();
+                            BranchGui.gui(player);
+                            return 1;
+                        })
+                )
+        ));
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(literal("ygasi")
                 .requires(source -> source.hasPermissionLevel(4))
                 .then(literal("reset")
