@@ -1,4 +1,5 @@
 <div align="center">
+  
 # `You've got a skill issue`
 
 [![Modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/modrinth_64h.png)](https://modrinth.com/mod/ygasi/versions)
@@ -8,8 +9,6 @@
 
 **This mod is currently in Early Alpha Stage! Not really usable yet with currently only the skill point unlock system fully implemented.**
 You've got a Skill Issue is a Minecraft Server-side mod Implementing a new skill system with a custom skill tree and amazing abilites to assist you when playing!
-
-![Showcase](https://raw.githubusercontent.com/Maximusbarcz/ChatToggle/master/showcase.gif)
 
 ## `Community`
 
