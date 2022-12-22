@@ -1,10 +1,10 @@
 <div align="center">
-<center>
+  
+# `You've got a skill issue`
 
-# `You've got a Skill Issue`
-
-[![Discord](https://img.shields.io/discord/1003636176013492285?color=%235865F2&label=Discord&style=for-the-badge)](https://discord.gg/w7PpGax9Bq)
-[![GitHub all releases](https://img.shields.io/github/downloads/Maximusbarcz/youve-got-a-skill-issue/total?style=for-the-badge)](https://github.com/Maximusbarcz/youve-got-a-skill-issue/releases)
+[![Modrinth](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/modrinth_64h.png)](https://modrinth.com/mod/ygasi/versions)
+[![Curseforge](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/curseforge_64h.png)](https://www.curseforge.com/minecraft/mc-mods/ygasi)
+[![Github](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/available/github_64h.png)](https://github.com/MayaqqDev/youve-got-a-skill-issue/)
 ## `Information`
 
 **This mod is currently in Early Alpha Stage! Not really usable yet with currently only the skill point unlock system fully implemented.**
@@ -12,12 +12,7 @@ You've got a Skill Issue is a Minecraft Server-side mod Implementing a new skill
 
 ## `Community`
 
-If you have any questions or want to follow this project you can join the [Hue Discord Server](https://discord.gg/w7PpGax9Bq)!
+For any questions or support you can join my discord by clicking the button below!
 
-## `License`
-
-This project is under the [LGPL-3 License](https://www.gnu.org/licenses/lgpl-3.0.en.html)
-
-</center>
+[![Discord Server](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@2/assets/cozy/social/discord-singular_64h.png)](https://discord.gg/w7PpGax9Bq)
 </div>
-
