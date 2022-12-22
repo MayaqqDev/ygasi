@@ -19,9 +19,9 @@ import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 
 public class BranchGui {
     public static void gui(ServerPlayerEntity player) {
-        UUID playerUUID = player.getUuid();
-        PlayerDataRegistry.load(playerUUID);
         try {
+            UUID playerUUID = player.getUuid();
+            PlayerDataRegistry.load(playerUUID);
             SimpleGui gui = new SimpleGui(ScreenHandlerType.GENERIC_9X3, player, false) {};
 
             gui.setTitle(Text.of("§3Skill Points: " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))));

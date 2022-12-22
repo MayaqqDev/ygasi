@@ -15,7 +15,6 @@ public class ConfigRegistry {
     public static Config CONFIG = new Config();
 
     static File modConfFolder = new File(FabricLoader.getInstance().getConfigDir().toFile(),"ygasi");
-    private static final File serverDatFile = new File(FabricLoader.getInstance().getConfigDir().toFile() + "/ygasi/players");
     private static File configFile = new File(modConfFolder,"config.json");
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -23,9 +22,6 @@ public class ConfigRegistry {
         //we do bunch of checking here mainly if the file exists
         if (!modConfFolder.exists()) {
             modConfFolder.mkdir();
-        }
-        if (!serverDatFile.exists()) {
-            serverDatFile.mkdir();
         }
         if (!configFile.exists()) {
             try {

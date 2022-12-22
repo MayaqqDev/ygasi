@@ -16,7 +16,7 @@
   "license": "LGPL-3",
   "icon": "assets/ygasi/icon.png",
 
-  "environment": "*",
+  "environment": "server",
   "entrypoints": {
     "main": [
       "dev.mayaqq.ygasi.Ygasi"

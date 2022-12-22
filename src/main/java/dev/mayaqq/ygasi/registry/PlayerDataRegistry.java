@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.MinecraftServer;
 
 import java.io.*;
 import java.util.*;
@@ -14,7 +15,12 @@ public class PlayerDataRegistry {
 
 
     public static void load(UUID uuid) {
-        File playerDatFile = new File(FabricLoader.getInstance().getConfigDir().toFile() + "/ygasi/players/" + uuid + ".json");
+        //this isnt working :sob:
+        File playerDataFolder = new File(MinecraftServer::getSavePath, "ygasi");
+        File playerDatFile = new File(FabricLoader.getInstance().getGameDir().toFile() + "/ygasi/" + uuid + ".json");
+        if (!playerDataFolder.exists()) {
+            playerDataFolder.mkdir();
+        }
         if (!playerDatFile.exists()) {
             try {
                 playerDatFile.createNewFile();
@@ -33,7 +39,7 @@ public class PlayerDataRegistry {
 
     public static void save(UUID uuid) {
         try {
-            File playerDatFile = new File(FabricLoader.getInstance().getConfigDir().toFile() + "/ygasi/players/" + uuid + ".json");
+            File playerDatFile = new File(FabricLoader.getInstance().getGameDir().toFile() + "/ygasi/" + uuid + ".json");
             var writer = new FileWriter(playerDatFile);
             writer.write(gson.toJson(PLAYERDATA));
             writer.close();
@@ -46,7 +52,8 @@ public class PlayerDataRegistry {
         @SerializedName("branches")
         public Map<String, Boolean> branches = new HashMap<>();
         @SerializedName("skills")
-        public Map<String, Integer> skills = new HashMap<>();
+        public Map<String, Map<String, Integer>> skills = new HashMap<>();
+
         public PlayerData() {}
     }
 }

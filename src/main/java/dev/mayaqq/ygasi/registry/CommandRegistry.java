@@ -70,6 +70,15 @@ public class CommandRegistry {
                                     context.getSource().sendMessage(Text.literal("§a" + player.getEntityName() + " has " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) + " Unspent Skill Points."));
                                     return 1;
                                 })))
-        ));
+                .then(literal("config")
+                        .then(literal("reload")
+                                .executes(context -> {
+                                    ConfigRegistry.load();
+                                    context.getSource().sendMessage(Text.literal("§aConfig reloaded!"));
+                                    return 1;
+                                })))
+
+                )
+        );
     }
 }
