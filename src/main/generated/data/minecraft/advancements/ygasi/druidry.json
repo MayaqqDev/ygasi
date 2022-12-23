@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:ygasi/root",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "minecraft:ygasi/root"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_druidry": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "text": "Unlock the druidry branch!"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:oak_sapling"
+    },
+    "show_toast": false,
+    "title": {
+      "text": "Druidry"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_druidry"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ]
+}

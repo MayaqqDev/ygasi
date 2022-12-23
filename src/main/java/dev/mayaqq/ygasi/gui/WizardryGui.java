@@ -1,28 +1,23 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.registry.PlayerDataRegistry;
+import dev.mayaqq.ygasi.util.GetAdvancementProgress;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
-import eu.pb4.sgui.api.gui.SimpleGui;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 
-import java.util.UUID;
-
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 
 public class WizardryGui {
     public static void gui(ServerPlayerEntity player) {
         try {
-            UUID playerUUID = player.getUuid();
-            PlayerDataRegistry.load(playerUUID);
-            if (PlayerDataRegistry.PLAYERDATA.branches.get("wizardry") == null || !PlayerDataRegistry.PLAYERDATA.branches.get("wizardry")) {
+            if (!GetAdvancementProgress.get(player, "wizardry")) {
                 player.sendMessage(Text.of("§cYou have not unlocked this branch yet!"), false);
                 BranchGui.gui(player);
             } else {
-                SimpleGui gui = new SimpleGui(ScreenHandlerType.GENERIC_9X6, player, false) {};
+                SkillGui gui = new SkillGui(ScreenHandlerType.GENERIC_9X6, player, false) {};
 
                 gui.setTitle(Text.of( "§5§lWizardry " + "§3Skill Points: " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))));
 

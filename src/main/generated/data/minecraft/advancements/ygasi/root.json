@@ -1,0 +1,28 @@
+{
+  "criteria": {
+    "opened_skill_menu": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/sculk_catalyst_top.png",
+    "description": {
+      "text": "The journey begins here!"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:diamond"
+    },
+    "show_toast": true,
+    "title": {
+      "text": "You've got a skill issue!"
+    }
+  },
+  "requirements": [
+    [
+      "opened_skill_menu"
+    ]
+  ]
+}

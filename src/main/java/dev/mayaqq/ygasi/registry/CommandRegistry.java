@@ -57,10 +57,7 @@ public class CommandRegistry {
                                 .executes(context -> {
                                     ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
                                     player.resetStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS));
-                                    File playerData = new File(FabricLoader.getInstance().getGameDir().toFile() + "/ygasi/" + player.getUuid() + ".json");
-                                    playerData.delete();
-                                    PlayerDataRegistry.load(player.getUuid());
-                                    context.getSource().sendMessage(Text.literal("§aSkill Points reset to 0 and all skill data deleted for " + player.getEntityName() + "."));
+                                    context.getSource().sendMessage(Text.literal("§aSkill Points reset to 0 for " + player.getEntityName() + "."));
                                     return 1;
                                 })))
                 .then(literal("add")

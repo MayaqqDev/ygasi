@@ -19,6 +19,17 @@ repositories {
 	maven { url "https://maven.terraformersmc.com" }
 	maven { url 'https://maven.nucleoid.xyz' }
 	maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = "Modrinth"
+				url = "https://api.modrinth.com/maven"
+			}
+		}
+		filter {
+			includeGroup "maven.modrinth"
+		}
+	}
 }
 
 dependencies {
@@ -34,12 +45,10 @@ dependencies {
 	modImplementation include('eu.pb4:polymer:0.2.16+1.19.2')
 	modImplementation include('fr.catcore:server-translations-api:1.4.17+1.19.2')
 
+	modImplementation "maven.modrinth:Revelationary:1.1.0"
+
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.1.0")
 
-	// Uncomment the following line to enable the deprecated Fabric API modules. 
-	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
-
-	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 	modApi("com.terraformersmc:modmenu:${"4.+"}")}
 
 processResources {
@@ -63,6 +72,7 @@ java {
 }
 
 jar {
+	from file('src/main/generated')
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
@@ -90,8 +100,9 @@ loom {
 		//
 		// This adds a new gradle task that runs the datagen API: "gradlew runDatagenClient"
 		//
-		datagenClient {
-			inherit client
+		datagen {
+			server()
+
 			name "Data Generation"
 			vmArg "-Dfabric-api.datagen"
 			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"

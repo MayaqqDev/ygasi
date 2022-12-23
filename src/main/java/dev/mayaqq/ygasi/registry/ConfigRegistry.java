@@ -50,6 +50,8 @@ public class ConfigRegistry {
         //the thing to write in the config file
         public int pointsRewarded = 1;
         public int branchCost = 16;
+        public Boolean enableSkillBook = true;
+
         public Config() {}
     }
 }
