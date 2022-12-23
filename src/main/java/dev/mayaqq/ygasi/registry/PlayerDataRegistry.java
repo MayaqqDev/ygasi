@@ -4,19 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.server.MinecraftServer;
 
 import java.io.*;
 import java.util.*;
 
 public class PlayerDataRegistry {
     public static PlayerData PLAYERDATA = new PlayerData();
+    public static EmptyPlayerData EMPTYPLAYERDATA = new EmptyPlayerData();
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 
     public static void load(UUID uuid) {
         //this isnt working :sob:
-        File playerDataFolder = new File(MinecraftServer::getSavePath, "ygasi");
+        File playerDataFolder = new File(FabricLoader.getInstance().getGameDir().toFile(), "ygasi");
         File playerDatFile = new File(FabricLoader.getInstance().getGameDir().toFile() + "/ygasi/" + uuid + ".json");
         if (!playerDataFolder.exists()) {
             playerDataFolder.mkdir();
@@ -24,7 +24,7 @@ public class PlayerDataRegistry {
         if (!playerDatFile.exists()) {
             try {
                 playerDatFile.createNewFile();
-                save(uuid);
+                saveEmpty(uuid);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -47,13 +47,32 @@ public class PlayerDataRegistry {
             throw new RuntimeException(e);
         }
     }
+    public static void saveEmpty(UUID uuid) {
+        try {
+            File playerDatFile = new File(FabricLoader.getInstance().getGameDir().toFile() + "/ygasi/" + uuid + ".json");
+            var writer = new FileWriter(playerDatFile);
+            writer.write(gson.toJson(EMPTYPLAYERDATA));
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static class PlayerData {
         @SerializedName("branches")
-        public Map<String, Boolean> branches = new HashMap<>();
+        public static Map<String, Boolean> branches = new HashMap<>();
         @SerializedName("skills")
-        public Map<String, Map<String, Integer>> skills = new HashMap<>();
+        public static Map<String, Integer> skills = new HashMap<>();
 
         public PlayerData() {}
+    }
+
+    public static class EmptyPlayerData {
+        @SerializedName("branches")
+        public static Map<String, Boolean> branches = new HashMap<>();
+        @SerializedName("skills")
+        public static Map<String, Integer> skills = new HashMap<>();
+
+        public EmptyPlayerData() {}
     }
 }

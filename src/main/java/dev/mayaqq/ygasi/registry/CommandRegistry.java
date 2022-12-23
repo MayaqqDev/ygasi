@@ -3,13 +3,19 @@ package dev.mayaqq.ygasi.registry;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import dev.mayaqq.ygasi.gui.BranchGui;
+import dev.mayaqq.ygasi.gui.DruidryGui;
+import dev.mayaqq.ygasi.gui.MercenaryGui;
+import dev.mayaqq.ygasi.gui.WizardryGui;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
+
+import java.io.File;
 
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -25,21 +31,21 @@ public class CommandRegistry {
                     .then(literal("Mercenary")
                             .executes(context -> {
                                 ServerPlayerEntity player = context.getSource().getPlayer();
-                                BranchGui.gui(player);
+                                MercenaryGui.gui(player);
                                 return 1;
                             })
                     )
                     .then(literal("Wizardry")
                             .executes(context -> {
                                 ServerPlayerEntity player = context.getSource().getPlayer();
-                                BranchGui.gui(player);
+                                WizardryGui.gui(player);
                                 return 1;
                             })
                 )
                 .then(literal("Druidry")
                         .executes(context -> {
                             ServerPlayerEntity player = context.getSource().getPlayer();
-                            BranchGui.gui(player);
+                            DruidryGui.gui(player);
                             return 1;
                         })
                 )
@@ -51,7 +57,10 @@ public class CommandRegistry {
                                 .executes(context -> {
                                     ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
                                     player.resetStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS));
-                                    context.getSource().sendMessage(Text.literal("§aSkill Points reset to 0 for " + player.getEntityName() + "."));
+                                    File playerData = new File(FabricLoader.getInstance().getGameDir().toFile() + "/ygasi/" + player.getUuid() + ".json");
+                                    playerData.delete();
+                                    PlayerDataRegistry.load(player.getUuid());
+                                    context.getSource().sendMessage(Text.literal("§aSkill Points reset to 0 and all skill data deleted for " + player.getEntityName() + "."));
                                     return 1;
                                 })))
                 .then(literal("add")

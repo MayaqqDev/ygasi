@@ -1,9 +1,8 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.registry.ConfigRegistry;
-import dev.mayaqq.ygasi.registry.PlayerDataRegistry;
 import eu.pb4.sgui.api.elements.*;
 import eu.pb4.sgui.api.gui.SimpleGui;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
@@ -16,6 +15,9 @@ import net.minecraft.util.Formatting;
 import java.util.UUID;
 
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
+
+import dev.mayaqq.ygasi.registry.ConfigRegistry;
+import dev.mayaqq.ygasi.registry.PlayerDataRegistry;
 
 public class BranchGui {
     public static void gui(ServerPlayerEntity player) {
@@ -65,7 +67,7 @@ public class BranchGui {
                         .glow()
                         .setName(Text.literal("Mercenary")
                                 .setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.RED)))
-                        .setCallback((index, clickType, actionType) -> gui.close())
+                        .setCallback((index, clickType, actionType) -> MercenaryGui.gui(player))
                 );
             }
 
@@ -83,7 +85,7 @@ public class BranchGui {
                         .glow()
                         .setName(Text.literal("Wizardry")
                                 .setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.DARK_PURPLE)))
-                        .setCallback((index, clickType, actionType) -> gui.close())
+                        .setCallback((index, clickType, actionType) -> WizardryGui.gui(player))
                 );
             }
 
@@ -101,7 +103,7 @@ public class BranchGui {
                         .glow()
                         .setName(Text.literal("Druidry")
                                 .setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.GREEN)))
-                        .setCallback((index, clickType, actionType) -> gui.close())
+                        .setCallback((index, clickType, actionType) -> DruidryGui.gui(player))
                 );
             }
             gui.open();
@@ -116,6 +118,14 @@ public class BranchGui {
             PlayerDataRegistry.PLAYERDATA.branches.put(branch, true);
             PlayerDataRegistry.save(player.getUuid());
             player.closeHandledScreen();
+            if (branch.equals("mercenary")) {
+                MercenaryGui.gui(player);
+            } else if (branch.equals("wizardry")) {
+                WizardryGui.gui(player);
+            } else if (branch.equals("druidry")) {
+                DruidryGui.gui(player);
+            }
+
         } else {
             player.sendMessage(Text.literal("You don't have enough skill points to unlock this branch!").setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.RED)), false);
             player.closeHandledScreen();
