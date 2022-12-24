@@ -3,14 +3,11 @@ package dev.mayaqq.ygasi.gui;
 import dev.mayaqq.ygasi.util.GetAdvancementProgress;
 import dev.mayaqq.ygasi.util.GrantAdvancementCriterion;
 import eu.pb4.sgui.api.elements.*;
-import eu.pb4.sgui.api.gui.SimpleGui;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -23,37 +20,40 @@ import net.minecraft.util.Identifier;
 
 public class BranchGui {
     public static void gui(ServerPlayerEntity player) {
+        int skillPoints = player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS));
+
         try {
             SkillGui gui = new SkillGui(ScreenHandlerType.GENERIC_9X3, player, false) {};
 
-            gui.setTitle(Text.of("§3Skill Points: " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))));
+            gui.setTitle(Text.of("§3Skill Points: " + skillPoints));
 
             //background items
-            for (int x = 0; x <= 17; x++) {
+            for (int x = 0; x <= 26; x++) {
                 gui.setSlot(x, new GuiElementBuilder()
                         .setItem(Items.GRAY_STAINED_GLASS_PANE)
                         .setName(Text.of(" "))
                 );
             }
-            for (int x = 18; x <= 26; x++) {
+            for (int x = 10; x <= 16; x++) {
                 gui.setSlot(x, new GuiElementBuilder()
-                        .setItem(Items.RED_STAINED_GLASS_PANE)
+                        .setItem(Items.LIGHT_BLUE_STAINED_GLASS_PANE)
                         .setName(Text.of(" "))
                 );
             }
-
-            //close button
-            gui.setSlot(22, new GuiElementBuilder()
-                    .setItem(Items.BARRIER)
-                    .setName(Text.literal("Close")
-                            .setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.DARK_RED)))
-                    .setCallback((index, clickType, actionType) -> close(player))
-            );
+            for (int x = 0; x <= 2; x++) {
+                for (int y = 2; y <= 6; y+=2) {
+                    gui.setSlot(x * 9 + y, new GuiElementBuilder()
+                            .setItem(Items.LIGHT_BLUE_STAINED_GLASS_PANE)
+                            .setName(Text.of(" "))
+                    );
+                }
+            }
 
             //branch items
             if (!GetAdvancementProgress.get(player, "mercenary")) {
                 gui.setSlot(11, new GuiElementBuilder()
                         .setItem(Items.IRON_SWORD)
+                        .setCustomModelData(1)
                         .hideFlag(ItemStack.TooltipSection.MODIFIERS)
                         .addLoreLine(Text.literal("Cost: " + ConfigRegistry.CONFIG.branchCost).setStyle(Style.EMPTY.withFormatting(Formatting.DARK_GRAY)))
                         .setName(Text.literal("Mercenary")
@@ -130,12 +130,8 @@ public class BranchGui {
             }
 
         } else {
-            player.sendMessage(Text.literal("You don't have enough skill points to unlock this branch!").setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.RED)), false);
+            player.sendMessage(Text.translatable("gui.ygasi.no.skill").setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.RED)), false);
             player.closeHandledScreen();
         }
-    }
-    public static void close(ServerPlayerEntity player) {
-        player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, SoundCategory.PLAYERS, 1.0F, 1.0F);
-        player.closeHandledScreen();
     }
 }

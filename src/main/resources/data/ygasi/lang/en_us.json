@@ -1,4 +1,8 @@
 {
-  "item.ygasi.skill_book": "Skill Book",
-  "item.ygasi.skill_book.tooltip": "Right click to open the skill book"
+  "item.ygasi.skill_book": "§6Skill Book",
+  "item.ygasi.skill_book.tooltip": "Right click to open",
+
+  "creative.ygasi.group": "Ygasi",
+
+  "gui.ygasi.no.skill": "You don't have enough skill points to unlock this branch!"
 }

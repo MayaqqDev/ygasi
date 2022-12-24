@@ -1,11 +1,7 @@
 package dev.mayaqq.ygasi.mixin;
 
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.AdvancementDisplay;
-import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.AdvancementRewards;
-import net.minecraft.server.ServerAdvancementLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
@@ -20,12 +16,16 @@ import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 
 @Mixin(AdvancementRewards.class)
 public class AdvancementRewardsMixin {
+
     @Shadow @Final private Identifier[] recipes;
+    @Shadow @Final private int experience;
 
     @Inject(method = "apply", at = @At("HEAD"))
-    private void inject(ServerPlayerEntity player, CallbackInfo ci) {
-        if (recipes.length == 0) {
+    private void apply(ServerPlayerEntity player, CallbackInfo ci) {
+        if (recipes.length == 0 && experience != 1) {
             player.increaseStat(SKILL_POINTS, ConfigRegistry.CONFIG.pointsRewarded);
+        } else if (experience == 1) {
+            player.addExperience(-1);
         }
     }
 }

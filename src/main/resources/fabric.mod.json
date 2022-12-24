@@ -19,7 +19,7 @@
   "environment": "server",
   "entrypoints": {
     "fabric-datagen": [
-      "dev.mayaqq.ygasi.registry.advancements.dataGen.DataGenRegistry"
+      "dev.mayaqq.ygasi.registry.dataGen.DataGenRegistry"
     ],
     "main": [
       "dev.mayaqq.ygasi.Ygasi"

@@ -24,5 +24,8 @@
     [
       "opened_skill_menu"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
 }

@@ -1,6 +1,6 @@
-package dev.mayaqq.ygasi.registry.advancements.dataGen;
+package dev.mayaqq.ygasi.registry.dataGen.advancements;
 
-import dev.mayaqq.ygasi.registry.advancements.Advancements;
+import dev.mayaqq.ygasi.registry.dataGen.advancements.Advancements;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;
@@ -8,7 +8,7 @@ import net.minecraft.advancement.Advancement;
 import java.util.function.Consumer;
 
 public class AdvancementProvider extends FabricAdvancementProvider {
-    protected AdvancementProvider(FabricDataGenerator dataGenerator) {
+    public AdvancementProvider(FabricDataGenerator dataGenerator) {
         super(dataGenerator);
     }
     @Override

@@ -34,5 +34,8 @@
     [
       "gotten_previous"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
 }

@@ -29,7 +29,6 @@ public class SkillBookItem extends SimplePolymerItem {
     public ItemStack getPolymerItemStack(ItemStack itemStack, ServerPlayerEntity player) {
         ItemStack out = PolymerItemUtils.createItemStack(itemStack, player);
         out.addEnchantment(Enchantments.LURE, 0);
-        out.setCustomName(Text.translatable("item.ygasi.skill_book").formatted(Formatting.GOLD).formatted(Formatting.BOLD));
         return out;
     }
 

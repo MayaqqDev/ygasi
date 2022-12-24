@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_book": {
+      "trigger": "minecraft:impossible"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ygasi:skill_book"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_book",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ygasi:skill_book"
+    ]
+  }
+}
