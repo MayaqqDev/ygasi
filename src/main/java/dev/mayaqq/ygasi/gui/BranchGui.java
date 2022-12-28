@@ -1,7 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.util.GetAdvancementProgress;
-import dev.mayaqq.ygasi.util.GrantAdvancementCriterion;
+import dev.mayaqq.ygasi.util.YgasiUtils;
 import eu.pb4.sgui.api.elements.*;
 
 import net.minecraft.item.ItemStack;
@@ -50,9 +49,9 @@ public class BranchGui {
             }
 
             //branch items
-            if (!GetAdvancementProgress.get(player, "mercenary")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "mercenary")) {
                 gui.setSlot(11, new GuiElementBuilder()
-                        .setItem(Items.IRON_SWORD)
+                        .setItem(Items.DIAMOND_SWORD)
                         .setCustomModelData(1)
                         .hideFlag(ItemStack.TooltipSection.MODIFIERS)
                         .addLoreLine(Text.literal("Cost: " + ConfigRegistry.CONFIG.branchCost).setStyle(Style.EMPTY.withFormatting(Formatting.DARK_GRAY)))
@@ -62,7 +61,7 @@ public class BranchGui {
                 );
             } else {
                 gui.setSlot(11, new GuiElementBuilder()
-                        .setItem(Items.IRON_SWORD)
+                        .setItem(Items.DIAMOND_SWORD)
                         .hideFlag(ItemStack.TooltipSection.MODIFIERS)
                         .glow()
                         .setName(Text.literal("Mercenary")
@@ -71,7 +70,7 @@ public class BranchGui {
                 );
             }
 
-            if (!GetAdvancementProgress.get(player, "wizardry")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "wizardry")) {
                 gui.setSlot(13, new GuiElementBuilder()
                         .setItem(Items.BLAZE_ROD)
                         .addLoreLine(Text.literal("Cost: " + ConfigRegistry.CONFIG.branchCost).setStyle(Style.EMPTY.withFormatting(Formatting.DARK_GRAY)))
@@ -89,7 +88,7 @@ public class BranchGui {
                 );
             }
 
-            if (!GetAdvancementProgress.get(player, "druidry")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "druidry")) {
                 gui.setSlot(15, new GuiElementBuilder()
                         .setItem(Items.OAK_SAPLING)
                         .addLoreLine(Text.literal("Cost: " + ConfigRegistry.CONFIG.branchCost).setStyle(Style.EMPTY.withFormatting(Formatting.DARK_GRAY)))
@@ -106,7 +105,33 @@ public class BranchGui {
                         .setCallback((index, clickType, actionType) -> DruidryGui.gui(player))
                 );
             }
-            GrantAdvancementCriterion.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/root"), "opened_skill_menu");
+
+            if (!YgasiUtils.getAdvancementProgress(player, "extra")) {
+                gui.setSlot(26, new GuiElementBuilder()
+                        .setItem(Items.BOOK)
+                        .addLoreLine(Text.literal("Cost: " + ConfigRegistry.CONFIG.branchCost / 2).setStyle(Style.EMPTY.withFormatting(Formatting.DARK_GRAY)))
+                        .setName(Text.literal("Extra")
+                                .setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.BLUE)))
+                        .setCallback((index, clickType, actionType) -> save(player, "extra", "§9Extra Skills"))
+                );
+            } else {
+                gui.setSlot(26, new GuiElementBuilder()
+                        .setItem(Items.BOOK)
+                        .glow()
+                        .setName(Text.literal("Extra Skills")
+                                .setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.BLUE)))
+                        .setCallback((index, clickType, actionType) -> ExtraGui.gui(player))
+                );
+            }
+
+            //info item
+            gui.setSlot(18, new GuiElementBuilder()
+                    .setItem(Items.PAPER)
+                    .setName(Text.literal("Info").formatted(Formatting.GOLD).formatted(Formatting.BOLD))
+                    .setCallback((index, clickType, actionType) -> infoMessage(player))
+            );
+
+            YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/root"), "opened_skill_menu");
 
             gui.open();
         } catch (Exception e) {
@@ -114,24 +139,39 @@ public class BranchGui {
         }
     }
     public static void save(ServerPlayerEntity player, String branch, String branchName) {
-        if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost) {
-            player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost);
-            player.sendMessage(Text.of("You have selected the §a" + branchName + " §fbranch!"), false);
-            player.closeHandledScreen();
-            if (branch.equals("mercenary")) {
-                GrantAdvancementCriterion.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/mercenary"), "unlocked_mercenary");
-                MercenaryGui.gui(player);
-            } else if (branch.equals("wizardry")) {
-                GrantAdvancementCriterion.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/wizardry"), "unlocked_wizardry");
-                WizardryGui.gui(player);
-            } else if (branch.equals("druidry")) {
-                GrantAdvancementCriterion.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/druidry"), "unlocked_druidry");
-                DruidryGui.gui(player);
+        if (branch.equals("extra")) {
+            if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost / 2) {
+                player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost / 2);
+                YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/extra"), "unlocked_extra");
+                player.sendMessage(Text.of("§aYou have unlocked the " + branchName + " branch!"), false);
+                ExtraGui.gui(player);
+            } else {
+                player.sendMessage(Text.of("§cYou do not have enough skill points to unlock this branch!"), false);
             }
-
         } else {
-            player.sendMessage(Text.translatable("gui.ygasi.no.skill").setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.RED)), false);
-            player.closeHandledScreen();
+            if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost) {
+                player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost);
+                player.sendMessage(Text.of("You have selected the §a" + branchName + " §fbranch!"), false);
+                player.closeHandledScreen();
+                if (branch.equals("mercenary")) {
+                    YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/mercenary"), "unlocked_mercenary");
+                    MercenaryGui.gui(player);
+                } else if (branch.equals("wizardry")) {
+                    YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/wizardry"), "unlocked_wizardry");
+                    WizardryGui.gui(player);
+                } else if (branch.equals("druidry")) {
+                    YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/druidry"), "unlocked_druidry");
+                    DruidryGui.gui(player);
+                }
+
+            } else {
+                player.sendMessage(Text.translatable("gui.ygasi.no.skill").setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.RED)), false);
+                player.closeHandledScreen();
+            }
         }
+    }
+    public static void infoMessage(ServerPlayerEntity player) {
+        player.closeHandledScreen();
+        player.sendMessage(Text.translatable("gui.ygasi.info.main"), false);
     }
 }

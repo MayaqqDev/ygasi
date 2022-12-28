@@ -1,6 +1,5 @@
 package dev.mayaqq.ygasi.registry.dataGen.advancements;
 
-import dev.mayaqq.ygasi.registry.dataGen.advancements.Advancements;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancement.Advancement;

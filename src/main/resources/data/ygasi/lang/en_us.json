@@ -4,5 +4,7 @@
 
   "creative.ygasi.group": "Ygasi",
 
-  "gui.ygasi.no.skill": "You don't have enough skill points to unlock this branch!"
+  "gui.ygasi.no.skill": "You don't have enough skill points to unlock this branch!",
+
+  "gui.ygasi.info.main": "§6§lYgasi Skill Advancement System:\n§r§3When using Ygasi, every time you get an Advancement, you will get a §6Skill Point!§3 Then when you gather enough skill points throughout your journey you can unlock new interesting skills in the §6skill book§3 and improve your game experience, from protecting yourself from falling to summoning a horde of undead you can do everything with just a bit of patience, skill and fun!"
 }

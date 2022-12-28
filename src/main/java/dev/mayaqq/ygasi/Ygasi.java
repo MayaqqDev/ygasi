@@ -4,8 +4,9 @@ import dev.mayaqq.ygasi.items.SkillBookItem;
 import dev.mayaqq.ygasi.registry.CommandRegistry;
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import dev.mayaqq.ygasi.registry.StatRegistry;
-import dev.mayaqq.ygasi.util.GrantAdvancementCriterion;
+import dev.mayaqq.ygasi.util.YgasiUtils;
 import eu.pb4.polymer.api.item.PolymerItemGroup;
+import eu.pb4.polymer.api.item.PolymerItemUtils;
 import eu.pb4.polymer.api.resourcepack.PolymerModelData;
 import eu.pb4.polymer.api.resourcepack.PolymerRPUtils;
 import net.fabricmc.api.ModInitializer;
@@ -41,10 +42,10 @@ public class Ygasi implements ModInitializer {
 
 		if (ConfigRegistry.CONFIG.enableSkillBook) {
 			ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-				if (!handler.player.getScoreboardTags().contains("ygasi:skill_book_unlocked")) {
-					handler.player.addScoreboardTag("ygasi:skill_book_unlocked");
+				if (!handler.player.getScoreboardTags().contains("skill_book_unlocked")) {
+					handler.player.addScoreboardTag("skill_book_unlocked");
 					handler.player.getInventory().offerOrDrop(new ItemStack(SKILL_BOOK));
-					GrantAdvancementCriterion.grantAdvancementCriterion(handler.player, new Identifier("ygasi", "skill_book"), "opened_skill_menu");
+					YgasiUtils.grantAdvancementCriterion(handler.player, new Identifier("ygasi", "recipes/minecraft_ygasi/skill_book"), "opened_skill_menu");
 				}
 			});
 		}

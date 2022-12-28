@@ -1,6 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.util.GetAdvancementProgress;
+import dev.mayaqq.ygasi.util.YgasiUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
@@ -13,7 +13,7 @@ import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 public class WizardryGui {
     public static void gui(ServerPlayerEntity player) {
         try {
-            if (!GetAdvancementProgress.get(player, "wizardry")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "wizardry")) {
                 player.sendMessage(Text.of("§cYou have not unlocked this branch yet!"), false);
                 BranchGui.gui(player);
             } else {

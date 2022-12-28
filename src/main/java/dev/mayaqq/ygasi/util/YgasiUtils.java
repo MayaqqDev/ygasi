@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static dev.mayaqq.ygasi.Ygasi.LOGGER;
 
-public class GrantAdvancementCriterion {
+public class YgasiUtils {
     public static void grantAdvancementCriterion(@NotNull ServerPlayerEntity serverPlayerEntity, Identifier advancementIdentifier, String criterion) {
         if (serverPlayerEntity.getServer() == null) {
             return;
@@ -25,5 +25,9 @@ public class GrantAdvancementCriterion {
                 tracker.grantCriterion(advancement, criterion);
             }
         }
+    }
+
+    public static boolean getAdvancementProgress(ServerPlayerEntity player, String advancement) {
+        return player.getAdvancementTracker().getProgress(player.getServer().getAdvancementLoader().get(new Identifier("minecraft", "ygasi/" + advancement))).isDone();
     }
 }

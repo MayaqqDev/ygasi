@@ -7,29 +7,28 @@
       },
       "trigger": "revelationary:advancement_gotten"
     },
-    "unlocked_mercenary": {
+    "unlocked_extra": {
       "trigger": "minecraft:impossible"
     }
   },
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.ygasi.mercenary.description"
+      "translate": "advancements.ygasi.extra.description"
     },
     "frame": "goal",
     "hidden": false,
     "icon": {
-      "item": "minecraft:diamond_sword",
-      "nbt": "{Damage:0}"
+      "item": "minecraft:emerald"
     },
     "show_toast": false,
     "title": {
-      "translate": "advancements.ygasi.mercenary.title"
+      "translate": "advancements.ygasi.extra.title"
     }
   },
   "requirements": [
     [
-      "unlocked_mercenary"
+      "unlocked_extra"
     ],
     [
       "gotten_previous"

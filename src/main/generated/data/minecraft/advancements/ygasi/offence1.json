@@ -1,35 +1,35 @@
 {
-  "parent": "minecraft:ygasi/root",
+  "parent": "minecraft:ygasi/mercenary",
   "criteria": {
     "gotten_previous": {
       "conditions": {
-        "advancement_identifier": "minecraft:ygasi/root"
+        "advancement_identifier": "minecraft:ygasi/mercenary"
       },
       "trigger": "revelationary:advancement_gotten"
     },
-    "unlocked_mercenary": {
+    "unlocked_offence1": {
       "trigger": "minecraft:impossible"
     }
   },
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.ygasi.mercenary.description"
+      "translate": "advancements.ygasi.mercenary.offence1.description"
     },
-    "frame": "goal",
-    "hidden": false,
+    "frame": "task",
+    "hidden": true,
     "icon": {
-      "item": "minecraft:diamond_sword",
+      "item": "minecraft:iron_sword",
       "nbt": "{Damage:0}"
     },
     "show_toast": false,
     "title": {
-      "translate": "advancements.ygasi.mercenary.title"
+      "translate": "advancements.ygasi.mercenary.offence1.title"
     }
   },
   "requirements": [
     [
-      "unlocked_mercenary"
+      "unlocked_offence1"
     ],
     [
       "gotten_previous"

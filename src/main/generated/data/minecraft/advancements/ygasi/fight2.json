@@ -1,35 +1,34 @@
 {
-  "parent": "minecraft:ygasi/root",
+  "parent": "minecraft:ygasi/fight1",
   "criteria": {
     "gotten_previous": {
       "conditions": {
-        "advancement_identifier": "minecraft:ygasi/root"
+        "advancement_identifier": "minecraft:ygasi/fight1"
       },
       "trigger": "revelationary:advancement_gotten"
     },
-    "unlocked_mercenary": {
+    "unlocked_fight2": {
       "trigger": "minecraft:impossible"
     }
   },
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.ygasi.mercenary.description"
+      "translate": "advancements.ygasi.wizardry.fight2.description"
     },
-    "frame": "goal",
-    "hidden": false,
+    "frame": "task",
+    "hidden": true,
     "icon": {
-      "item": "minecraft:diamond_sword",
-      "nbt": "{Damage:0}"
+      "item": "minecraft:blaze_powder"
     },
     "show_toast": false,
     "title": {
-      "translate": "advancements.ygasi.mercenary.title"
+      "translate": "advancements.ygasi.wizardry.fight2.title"
     }
   },
   "requirements": [
     [
-      "unlocked_mercenary"
+      "unlocked_fight2"
     ],
     [
       "gotten_previous"

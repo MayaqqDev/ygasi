@@ -14,7 +14,7 @@
   "display": {
     "announce_to_chat": false,
     "description": {
-      "text": "Unlock the druidry branch!"
+      "translate": "advancements.ygasi.druidry.description"
     },
     "frame": "goal",
     "hidden": false,
@@ -23,7 +23,7 @@
     },
     "show_toast": false,
     "title": {
-      "text": "Druidry"
+      "translate": "advancements.ygasi.druidry.title"
     }
   },
   "requirements": [

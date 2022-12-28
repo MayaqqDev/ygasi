@@ -1,35 +1,34 @@
 {
-  "parent": "minecraft:ygasi/root",
+  "parent": "minecraft:ygasi/protean2",
   "criteria": {
     "gotten_previous": {
       "conditions": {
-        "advancement_identifier": "minecraft:ygasi/root"
+        "advancement_identifier": "minecraft:ygasi/protean2"
       },
       "trigger": "revelationary:advancement_gotten"
     },
-    "unlocked_mercenary": {
+    "unlocked_protean3": {
       "trigger": "minecraft:impossible"
     }
   },
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.ygasi.mercenary.description"
+      "translate": "advancements.ygasi.druidry.protean3.description"
     },
-    "frame": "goal",
-    "hidden": false,
+    "frame": "task",
+    "hidden": true,
     "icon": {
-      "item": "minecraft:diamond_sword",
-      "nbt": "{Damage:0}"
+      "item": "minecraft:slime_ball"
     },
     "show_toast": false,
     "title": {
-      "translate": "advancements.ygasi.mercenary.title"
+      "translate": "advancements.ygasi.druidry.protean3.title"
     }
   },
   "requirements": [
     [
-      "unlocked_mercenary"
+      "unlocked_protean3"
     ],
     [
       "gotten_previous"

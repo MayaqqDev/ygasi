@@ -14,7 +14,7 @@
   "display": {
     "announce_to_chat": false,
     "description": {
-      "text": "Unlock the wizardry branch!"
+      "translate": "advancements.ygasi.wizardry.description"
     },
     "frame": "goal",
     "hidden": false,
@@ -23,7 +23,7 @@
     },
     "show_toast": false,
     "title": {
-      "text": "Wizardry"
+      "translate": "advancements.ygasi.wizardry.title"
     }
   },
   "requirements": [
