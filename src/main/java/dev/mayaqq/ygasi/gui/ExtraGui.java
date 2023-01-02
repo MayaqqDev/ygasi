@@ -13,7 +13,7 @@ import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 public class ExtraGui {
     public static void gui(ServerPlayerEntity player) {
         try {
-            if (!YgasiUtils.getAdvancementProgress(player, "extra")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/extra")) {
                 player.sendMessage(Text.of("§cYou have not unlocked this branch yet!"), false);
                 BranchGui.gui(player);
             } else {

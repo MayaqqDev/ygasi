@@ -1,5 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
+import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import dev.mayaqq.ygasi.util.YgasiUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.minecraft.item.Items;
@@ -13,7 +14,7 @@ import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 public class MercenaryGui {
     public static void gui(ServerPlayerEntity player) {
         try {
-            if (!YgasiUtils.getAdvancementProgress(player, "mercenary")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
                 player.sendMessage(Text.of("§cYou have not unlocked this branch yet!"), false);
                 BranchGui.gui(player);
             } else {
@@ -34,6 +35,15 @@ public class MercenaryGui {
                         .setName(Text.of("§c§lMercenary Unlocked!"))
                         .addLoreLine(Text.of("§3Skill Points: " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))))
                 );
+
+                if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence1")) {
+                    gui.setSlot(10, new GuiElementBuilder()
+                            .setItem(Items.DIAMOND_SWORD)
+                            .setName(Text.translatable("gui.ygasi.mercenary.offence1"))
+                            .addLoreLine(Text.translatable("gui.ygasi.mercenary.offence1.lore"))
+                            .addLoreLine(Text.translatable("gui.ygasi.mercenary.offence1.lore.cost".replace("%cost%", ConfigRegistry.CONFIG.offence1Cost + "")))
+                    );
+                }
 
                 gui.open();
             }

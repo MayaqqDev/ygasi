@@ -18,6 +18,7 @@ import net.minecraft.text.Text;
 import java.io.File;
 
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
+import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS_TOTAL;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class CommandRegistry {
@@ -57,6 +58,7 @@ public class CommandRegistry {
                                 .executes(context -> {
                                     ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
                                     player.resetStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS));
+                                    player.resetStat(Stats.CUSTOM.getOrCreateStat(StatRegistry.SKILL_POINTS_TOTAL));
                                     context.getSource().sendMessage(Text.literal("§aSkill Points reset to 0 for " + player.getEntityName() + "."));
                                     return 1;
                                 })))
@@ -66,6 +68,7 @@ public class CommandRegistry {
                                         .executes(context -> {
                                             ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
                                             player.increaseStat(SKILL_POINTS, IntegerArgumentType.getInteger(context, "amount"));
+                                            player.increaseStat(SKILL_POINTS_TOTAL, IntegerArgumentType.getInteger(context, "amount"));
                                             context.getSource().sendMessage(Text.literal("§aSkill Points increased by " + IntegerArgumentType.getInteger(context, "amount") + " for " + player.getEntityName() + "."));
                                             return 1;
                                         }))))
@@ -73,7 +76,7 @@ public class CommandRegistry {
                         .then(CommandManager.argument("target", EntityArgumentType.player())
                                 .executes(context -> {
                                     ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
-                                    context.getSource().sendMessage(Text.literal("§a" + player.getEntityName() + " has " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) + " Unspent Skill Points."));
+                                    context.getSource().sendMessage(Text.literal("§a" + player.getEntityName() + " has " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) + " Unspent Skill Points and " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL)) + " Total Skill Points."));
                                     return 1;
                                 })))
                 .then(literal("config")

@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
+import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS_TOTAL;
 
 
 @Mixin(AdvancementRewards.class)
@@ -24,6 +25,7 @@ public class AdvancementRewardsMixin {
     private void apply(ServerPlayerEntity player, CallbackInfo ci) {
         if (recipes.length == 0 && experience != 1) {
             player.increaseStat(SKILL_POINTS, ConfigRegistry.CONFIG.pointsRewarded);
+            player.increaseStat(SKILL_POINTS_TOTAL, ConfigRegistry.CONFIG.pointsRewarded);
         } else if (experience == 1) {
             player.addExperience(-1);
         }

@@ -51,6 +51,7 @@ public class ConfigRegistry {
         public int pointsRewarded = 1;
         public int branchCost = 16;
         public Boolean enableSkillBook = true;
+        public int offence1Cost = 3;
 
         public Config() {}
     }

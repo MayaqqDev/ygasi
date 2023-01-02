@@ -13,7 +13,7 @@ import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 public class DruidryGui {
     public static void gui(ServerPlayerEntity player) {
         try {
-            if (!YgasiUtils.getAdvancementProgress(player, "druidry")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry")) {
                 player.sendMessage(Text.of("§cYou have not unlocked this branch yet!"), false);
                 BranchGui.gui(player);
             } else {

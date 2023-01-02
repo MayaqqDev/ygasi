@@ -13,6 +13,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
+import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS_TOTAL;
 
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import net.minecraft.util.Identifier;
@@ -49,7 +50,7 @@ public class BranchGui {
             }
 
             //branch items
-            if (!YgasiUtils.getAdvancementProgress(player, "mercenary")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
                 gui.setSlot(11, new GuiElementBuilder()
                         .setItem(Items.DIAMOND_SWORD)
                         .setCustomModelData(1)
@@ -70,7 +71,7 @@ public class BranchGui {
                 );
             }
 
-            if (!YgasiUtils.getAdvancementProgress(player, "wizardry")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry")) {
                 gui.setSlot(13, new GuiElementBuilder()
                         .setItem(Items.BLAZE_ROD)
                         .addLoreLine(Text.literal("Cost: " + ConfigRegistry.CONFIG.branchCost).setStyle(Style.EMPTY.withFormatting(Formatting.DARK_GRAY)))
@@ -88,7 +89,7 @@ public class BranchGui {
                 );
             }
 
-            if (!YgasiUtils.getAdvancementProgress(player, "druidry")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry")) {
                 gui.setSlot(15, new GuiElementBuilder()
                         .setItem(Items.OAK_SAPLING)
                         .addLoreLine(Text.literal("Cost: " + ConfigRegistry.CONFIG.branchCost).setStyle(Style.EMPTY.withFormatting(Formatting.DARK_GRAY)))
@@ -106,7 +107,7 @@ public class BranchGui {
                 );
             }
 
-            if (!YgasiUtils.getAdvancementProgress(player, "extra")) {
+            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/extra")) {
                 gui.setSlot(26, new GuiElementBuilder()
                         .setItem(Items.BOOK)
                         .addLoreLine(Text.literal("Cost: " + ConfigRegistry.CONFIG.branchCost / 2).setStyle(Style.EMPTY.withFormatting(Formatting.DARK_GRAY)))
@@ -129,6 +130,12 @@ public class BranchGui {
                     .setItem(Items.PAPER)
                     .setName(Text.literal("Info").formatted(Formatting.GOLD).formatted(Formatting.BOLD))
                     .setCallback((index, clickType, actionType) -> infoMessage(player))
+            );
+            //reset item
+            gui.setSlot(8, new GuiElementBuilder()
+                    .setItem(Items.BARRIER)
+                    .setName(Text.literal("Reset").formatted(Formatting.RED).formatted(Formatting.BOLD))
+                    .setCallback((index, clickType, actionType) -> ResetGui.gui(player))
             );
 
             YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/root"), "opened_skill_menu");
@@ -165,13 +172,13 @@ public class BranchGui {
                 }
 
             } else {
-                player.sendMessage(Text.translatable("gui.ygasi.no.skill").setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.RED)), false);
+                player.sendMessage(Text.translatable("gui.ygasi.branch.no.skill").setStyle(Style.EMPTY.withBold(true).withFormatting(Formatting.RED)), false);
                 player.closeHandledScreen();
             }
         }
     }
     public static void infoMessage(ServerPlayerEntity player) {
         player.closeHandledScreen();
-        player.sendMessage(Text.translatable("gui.ygasi.info.main"), false);
+        player.sendMessage(Text.translatable("gui.ygasi.branch.info.main"), false);
     }
 }

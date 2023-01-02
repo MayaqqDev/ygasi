@@ -27,7 +27,26 @@ public class YgasiUtils {
         }
     }
 
-    public static boolean getAdvancementProgress(ServerPlayerEntity player, String advancement) {
-        return player.getAdvancementTracker().getProgress(player.getServer().getAdvancementLoader().get(new Identifier("minecraft", "ygasi/" + advancement))).isDone();
+    public static void revokeAllAdvancements(ServerPlayerEntity player, String namespace ,String path) {
+        if (player.getServer() == null) {
+            return;
+        }
+        ServerAdvancementLoader sal = player.getServer().getAdvancementLoader();
+        PlayerAdvancementTracker tracker = player.getAdvancementTracker();
+
+        for (Advancement advancement : sal.getAdvancements()) {
+            if (advancement.getId().getNamespace().equals(namespace) && advancement.getId().getPath().startsWith(path)) {
+                for (String criterion : advancement.getCriteria().keySet()) {
+                    tracker.revokeCriterion(advancement, criterion);
+                }
+            }
+        }
+    }
+
+    public static boolean getAdvancementProgress(ServerPlayerEntity player, String namespace, String path) {
+        if (player.getServer() == null) {
+            return false;
+        }
+        return player.getAdvancementTracker().getProgress(player.getServer().getAdvancementLoader().get(new Identifier(namespace, path))).isDone();
     }
 }
