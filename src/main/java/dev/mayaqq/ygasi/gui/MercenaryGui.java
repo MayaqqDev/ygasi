@@ -41,7 +41,7 @@ public class MercenaryGui {
                             .setItem(Items.DIAMOND_SWORD)
                             .setName(Text.translatable("gui.ygasi.mercenary.offence1"))
                             .addLoreLine(Text.translatable("gui.ygasi.mercenary.offence1.lore"))
-                            .addLoreLine(Text.translatable("gui.ygasi.mercenary.offence1.lore.cost".replace("%cost%", ConfigRegistry.CONFIG.offence1Cost + "")))
+                            .addLoreLine(Text.translatable("gui.ygasi.mercenary.offence1.lore.cost"))
                     );
                 }
 

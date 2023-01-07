@@ -2,10 +2,7 @@ package dev.mayaqq.ygasi.registry;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import dev.mayaqq.ygasi.gui.BranchGui;
-import dev.mayaqq.ygasi.gui.DruidryGui;
-import dev.mayaqq.ygasi.gui.MercenaryGui;
-import dev.mayaqq.ygasi.gui.WizardryGui;
+import dev.mayaqq.ygasi.gui.*;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -80,6 +77,10 @@ public class CommandRegistry {
                                     return 1;
                                 })))
                 .then(literal("config")
+                        .executes(context -> {
+                            ConfigGui.gui(context.getSource().getPlayer());
+                            return 1;
+                        })
                         .then(literal("reload")
                                 .executes(context -> {
                                     ConfigRegistry.load();

@@ -4,7 +4,28 @@
 
   "creative.ygasi.group": "Ygasi",
 
-  "gui.ygasi.no.skill": "You don't have enough skill points to unlock this branch!",
+  "gui.ygasi.branch.title": "§3Skill Points: %d",
+    "gui.ygasi.branch.mercenary.title": "§c§lMercenary",
+    "gui.ygasi.branch.wizardry.title": "§5§lWizardry",
+    "gui.ygasi.branch.druidry.title": "§a§lDruidry",
+    "gui.ygasi.branch.extra.title": "§9§lExtra",
+    "gui.ygasi.branch.info.title": "§6§lInfo",
+      "gui.ygasi.branch.info.main": "§6§lYgasi Skill Advancement System:\n§r§3When using Ygasi, every time you get an Advancement, you will get a §6Skill Point!§3 Then when you gather enough skill points throughout your journey you can unlock new interesting skills in the §6skill book§3 and improve your game experience, from protecting yourself from falling to summoning a horde of undead you can do everything with just a bit of patience, skill and fun!",
 
-  "gui.ygasi.info.main": "§6§lYgasi Skill Advancement System:\n§r§3When using Ygasi, every time you get an Advancement, you will get a §6Skill Point!§3 Then when you gather enough skill points throughout your journey you can unlock new interesting skills in the §6skill book§3 and improve your game experience, from protecting yourself from falling to summoning a horde of undead you can do everything with just a bit of patience, skill and fun!"
+  "gui.ygasi.branch.reset.title": "§4§lReset",
+      "gui.ygasi.branch.reset.lore": "§8This will reset all your skills and give you back all of your skill points.",
+      "gui.ygasi.branch.reset.lore2": "§c§lThis action cannot be undone.",
+  "gui.ygasi.branch.cost": "§3Cost: %d",
+  "gui.ygasi.branch.unlock": "§aYou have unlocked the %s branch!",
+  "gui.ygasi.branch.no.skill": "§cYou don't have enough skill points to unlock this branch!",
+
+  "config.ygasi.title": "§5§lYgasi Config",
+  "config.ygasi.pointsRewarded.title": "Points rewarded per advancement",
+  "config.ygasi.branchCost.title": "Branch Cost",
+  "config.ygasi.enableSkillBook.title": "Enable Skill Book on first login",
+  "config.ygasi.T1Cost.title": "The cost for tier 1 skills",
+  "config.ygasi.T2Cost.title": "The cost for tier 2 skills",
+  "config.ygasi.T3Cost.title": "The cost for tier 3 skills",
+  "config.ygasi.invalid.number": "§4The number you entered is invalid!",
+  "config.ygasi.current": "§8Current: §3"
 }

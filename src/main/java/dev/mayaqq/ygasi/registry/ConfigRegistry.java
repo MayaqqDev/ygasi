@@ -5,10 +5,6 @@ import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class ConfigRegistry {
 
@@ -26,7 +22,7 @@ public class ConfigRegistry {
         if (!configFile.exists()) {
             try {
                 configFile.createNewFile();
-                saveConfig();
+                save();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -39,11 +35,14 @@ public class ConfigRegistry {
         }
     }
 
-    public static void saveConfig() throws IOException {
-        //Write some info into the file under here
-        var writer = new FileWriter(configFile);
-        writer.write(gson.toJson(CONFIG));
-        writer.close();
+    public static void save() {
+        try {
+            FileWriter writer = new FileWriter(configFile);
+            gson.toJson(CONFIG, writer);
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static class Config {
@@ -51,7 +50,9 @@ public class ConfigRegistry {
         public int pointsRewarded = 1;
         public int branchCost = 16;
         public Boolean enableSkillBook = true;
-        public int offence1Cost = 3;
+        public int T1Cost = 5;
+        public int T2Cost = 10;
+        public int T3Cost = 15;
 
         public Config() {}
     }

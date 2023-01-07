@@ -27,9 +27,7 @@ public class SkillBookItem extends SimplePolymerItem {
 
     @Override
     public ItemStack getPolymerItemStack(ItemStack itemStack, ServerPlayerEntity player) {
-        ItemStack out = PolymerItemUtils.createItemStack(itemStack, player);
-        out.addEnchantment(Enchantments.LURE, 0);
-        return out;
+        return PolymerItemUtils.createItemStack(itemStack, player);
     }
 
     @Override
