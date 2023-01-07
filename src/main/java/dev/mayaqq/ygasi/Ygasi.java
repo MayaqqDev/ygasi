@@ -1,5 +1,6 @@
 package dev.mayaqq.ygasi;
 
+import dev.mayaqq.ygasi.events.RegisterEvents;
 import dev.mayaqq.ygasi.items.SkillBookItem;
 import dev.mayaqq.ygasi.registry.CommandRegistry;
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
@@ -10,7 +11,6 @@ import eu.pb4.polymer.api.item.PolymerItemUtils;
 import eu.pb4.polymer.api.resourcepack.PolymerModelData;
 import eu.pb4.polymer.api.resourcepack.PolymerRPUtils;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -29,9 +29,10 @@ public class Ygasi implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		StatRegistry.skillRegister();
-		CommandRegistry.RegisterCommands();
 		ConfigRegistry.load();
+		StatRegistry.register();
+		CommandRegistry.register();
+		RegisterEvents.register();
 
 		PolymerRPUtils.addAssetSource("ygasi");
 		PolymerModelData modelData = PolymerRPUtils.requestModel(Items.BOOK, new Identifier("ygasi", "item/skill_book"));
@@ -39,15 +40,5 @@ public class Ygasi implements ModInitializer {
 		Registry.register(Registry.ITEM, "ygasi:skill_book", SKILL_BOOK);
 
 		LOGGER.info("You've got a skill issue!");
-
-		if (ConfigRegistry.CONFIG.enableSkillBook) {
-			ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-				if (!handler.player.getScoreboardTags().contains("skill_book_unlocked")) {
-					handler.player.addScoreboardTag("skill_book_unlocked");
-					handler.player.getInventory().offerOrDrop(new ItemStack(SKILL_BOOK));
-					YgasiUtils.grantAdvancementCriterion(handler.player, new Identifier("ygasi", "recipes/minecraft_ygasi/skill_book"), "opened_skill_menu");
-				}
-			});
-		}
 	}
 }

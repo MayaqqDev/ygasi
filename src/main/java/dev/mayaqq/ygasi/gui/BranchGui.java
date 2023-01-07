@@ -18,12 +18,11 @@ import net.minecraft.util.Identifier;
 
 public class BranchGui {
     public static void gui(ServerPlayerEntity player) {
-        int skillPoints = player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS));
-
         try {
             SkillGui gui = new SkillGui(ScreenHandlerType.GENERIC_9X3, player, false) {};
 
-            gui.setTitle(Text.translatable("gui.ygasi.branch.title", skillPoints));
+            //the title of the gui
+            gui.setTitle(Text.translatable("gui.ygasi.branch.title", player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))).formatted(Formatting.DARK_AQUA));
 
             //background items
             for (int x = 0; x <= 26; x++) {
@@ -48,6 +47,7 @@ public class BranchGui {
             }
 
             //branch items
+            //mercenary gui button
             if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
                 gui.setSlot(11, new GuiElementBuilder()
                         .setItem(Items.DIAMOND_SWORD)
@@ -67,6 +67,7 @@ public class BranchGui {
                 );
             }
 
+            //wizardry gui button
             if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry")) {
                 gui.setSlot(13, new GuiElementBuilder()
                         .setItem(Items.BLAZE_ROD)
@@ -83,6 +84,7 @@ public class BranchGui {
                 );
             }
 
+            //druidry gui button
             if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry")) {
                 gui.setSlot(15, new GuiElementBuilder()
                         .setItem(Items.OAK_SAPLING)
@@ -99,6 +101,7 @@ public class BranchGui {
                 );
             }
 
+            //extra gui button
             if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/extra")) {
                 gui.setSlot(26, new GuiElementBuilder()
                         .setItem(Items.BOOK)
@@ -115,7 +118,7 @@ public class BranchGui {
                 );
             }
 
-            //info item
+            //info item button
             gui.setSlot(18, new GuiElementBuilder()
                     .setItem(Items.PAPER)
                     .setName(Text.translatable("gui.ygasi.branch.info.title"))
@@ -124,7 +127,7 @@ public class BranchGui {
                         player.sendMessage(Text.translatable("gui.ygasi.branch.info.main"), false);
                     })
             );
-            //reset item
+            //reset item button
             gui.setSlot(8, new GuiElementBuilder()
                     .setItem(Items.BARRIER)
                     .setName(Text.translatable("gui.ygasi.branch.reset.title"))
@@ -133,6 +136,7 @@ public class BranchGui {
                     .setCallback((index, clickType, actionType) -> ResetGui.gui(player))
             );
 
+            //grant the player the root advancement of ygasi
             YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/root"), "opened_skill_menu");
 
             gui.open();
@@ -140,7 +144,9 @@ public class BranchGui {
             e.printStackTrace();
         }
     }
+    //this happens when you try to unlock a branch
     public static void save(ServerPlayerEntity player, String branch, String branchName) {
+        //special category for extra branch because it's half the price
         if (branch.equals("extra")) {
             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost / 2) {
                 player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost / 2);
@@ -150,11 +156,14 @@ public class BranchGui {
             } else {
                 player.sendMessage(Text.translatable("gui.ygasi.branch.no.skill"), false);
             }
+            //the rest of the branches
         } else {
+            //same code as in extra
             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost) {
                 player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost);
                 player.sendMessage(Text.translatable("gui.ygasi.branch.unlock", Text.translatable(branchName)), false);
                 player.closeHandledScreen();
+                //grant the player the advancement of the branch they unlocked
                 switch (branch) {
                     case "mercenary" -> {
                         YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/mercenary"), "unlocked_mercenary");
@@ -169,7 +178,7 @@ public class BranchGui {
                         DruidryGui.gui(player);
                     }
                 }
-
+                //if the player doesn't have enough skill points
             } else {
                 player.sendMessage(Text.translatable("gui.ygasi.branch.no.skill"), false);
                 player.closeHandledScreen();

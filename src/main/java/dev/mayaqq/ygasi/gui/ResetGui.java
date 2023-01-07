@@ -2,7 +2,6 @@ package dev.mayaqq.ygasi.gui;
 
 import dev.mayaqq.ygasi.util.YgasiUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
-import net.minecraft.advancement.Advancement;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -29,14 +28,14 @@ public class ResetGui {
 
         gui.setSlot(12, new GuiElementBuilder()
                 .setItem(Items.GREEN_CONCRETE)
-                .setName(Text.translatable("gui.ygasi.reset.confirm"))
+                .setName(Text.translatable("gui.ygasi.reset.confirm.title"))
                 .addLoreLine(Text.translatable("gui.ygasi.reset.confirm.lore"))
                 .setCallback((index, clickType, actionType) -> reset(player))
         );
 
         gui.setSlot(14, new GuiElementBuilder()
                 .setItem(Items.RED_CONCRETE)
-                .setName(Text.translatable("gui.ygasi.reset.deny"))
+                .setName(Text.translatable("gui.ygasi.reset.deny.title"))
                 .addLoreLine(Text.translatable("gui.ygasi.reset.deny.lore"))
                 .setCallback((index, clickType, actionType) -> BranchGui.gui(player))
         );
@@ -50,11 +49,11 @@ public class ResetGui {
             player.experienceLevel -= 10;
             player.closeHandledScreen();
             YgasiUtils.revokeAllAdvancements(player, "minecraft", "ygasi/");
-            player.sendMessage(Text.translatable("gui.ygasi.branch.reset.main"), false);
+            player.sendMessage(Text.translatable("gui.ygasi.reset.success"), false);
             player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL)));
             BranchGui.gui(player);
         } else {
-            player.sendMessage(Text.translatable("gui.ygasi.branch.reset.no.xp"), false);
+            player.sendMessage(Text.translatable("gui.ygasi.reset.fail"), false);
             player.closeHandledScreen();
         }
     }

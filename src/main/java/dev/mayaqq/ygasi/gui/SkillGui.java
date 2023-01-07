@@ -7,6 +7,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 
 public class SkillGui extends SimpleGui {
+    // I'm doing the onOpen and onClose methods here because I want to play a sound when the gui is opened and closed for all of the guis so I don't have to do it in every gui class
     public SkillGui(ScreenHandlerType<?> type, ServerPlayerEntity player, boolean manipulatePlayerSlots) {
         super(type, player, manipulatePlayerSlots);
     }
