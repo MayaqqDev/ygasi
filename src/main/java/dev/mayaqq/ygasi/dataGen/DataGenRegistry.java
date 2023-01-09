@@ -1,7 +1,7 @@
-package dev.mayaqq.ygasi.registry.dataGen;
+package dev.mayaqq.ygasi.dataGen;
 
-import dev.mayaqq.ygasi.registry.dataGen.advancements.AdvancementProvider;
-import dev.mayaqq.ygasi.registry.dataGen.recipes.YgasiRecipes;
+import dev.mayaqq.ygasi.dataGen.advancements.AdvancementProvider;
+import dev.mayaqq.ygasi.dataGen.recipes.YgasiRecipes;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 

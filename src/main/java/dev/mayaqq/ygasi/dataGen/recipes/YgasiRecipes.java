@@ -1,4 +1,4 @@
-package dev.mayaqq.ygasi.registry.dataGen.recipes;
+package dev.mayaqq.ygasi.dataGen.recipes;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -10,7 +10,7 @@ import net.minecraft.tag.ItemTags;
 
 import java.util.function.Consumer;
 
-import static dev.mayaqq.ygasi.Ygasi.SKILL_BOOK;
+import static dev.mayaqq.ygasi.registry.ItemRegistry.SKILL_BOOK;
 
 public class YgasiRecipes extends FabricRecipeProvider {
     public YgasiRecipes(FabricDataGenerator dataGenerator) {

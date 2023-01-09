@@ -1,4 +1,4 @@
-package dev.mayaqq.ygasi.registry.dataGen.advancements;
+package dev.mayaqq.ygasi.dataGen.advancements;
 
 import de.dafuqs.revelationary.advancement_criteria.AdvancementGottenCriterion;
 import net.minecraft.advancement.Advancement;

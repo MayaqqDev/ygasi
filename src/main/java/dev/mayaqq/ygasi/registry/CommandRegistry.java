@@ -58,7 +58,7 @@ public class CommandRegistry {
                                         ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
                                         player.resetStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS));
                                         player.resetStat(Stats.CUSTOM.getOrCreateStat(StatRegistry.SKILL_POINTS_TOTAL));
-                                        context.getSource().sendMessage(Text.translatable("commands.ygasi.skillpoints.reset", player.getEntityName()).formatted(Formatting.GREEN));
+                                        player.sendMessage(Text.translatable("commands.ygasi.skillpoints.reset", player.getEntityName()).formatted(Formatting.GREEN));
                                         return 1;
                                     })))
                     .then(literal("add")
@@ -76,7 +76,7 @@ public class CommandRegistry {
                             .then(CommandManager.argument("target", EntityArgumentType.player())
                                     .executes(context -> {
                                         ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "target");
-                                        context.getSource().sendMessage(Text.translatable("commands.ygasi.skillpoints.get", player.getEntityName(), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL))).formatted(Formatting.GREEN));
+                                        player.sendMessage(Text.translatable("commands.ygasi.skillpoints.get", player.getEntityName(), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL))).formatted(Formatting.GREEN));
                                         return 1;
                                     }))))
                 .then(literal("config")

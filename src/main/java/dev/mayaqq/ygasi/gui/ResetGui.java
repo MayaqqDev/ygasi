@@ -1,6 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.util.YgasiUtils;
+import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
@@ -48,7 +48,7 @@ public class ResetGui {
             player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
             player.experienceLevel -= 10;
             player.closeHandledScreen();
-            YgasiUtils.revokeAllAdvancements(player, "minecraft", "ygasi/");
+            AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/");
             player.sendMessage(Text.translatable("gui.ygasi.reset.success"), false);
             player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL)));
             BranchGui.gui(player);

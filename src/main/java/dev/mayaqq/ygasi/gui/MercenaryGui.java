@@ -1,6 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.util.YgasiUtils;
+import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
@@ -15,7 +15,7 @@ public class MercenaryGui {
     public static void gui(ServerPlayerEntity player) {
         String title = Text.translatable("gui.ygasi.branch.mercenary.title").getString() + " " + Text.translatable("gui.ygasi.branch.title", player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))).formatted(Formatting.DARK_AQUA).getString();
         try {
-            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
+            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
                 player.sendMessage(Text.translatable("gui.ygasi.branches.fail"), false);
                 BranchGui.gui(player);
             } else {
@@ -37,7 +37,7 @@ public class MercenaryGui {
                         .addLoreLine(Text.of("§3Skill Points: " + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))))
                 );
 
-                if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence1")) {
+                if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence1")) {
                     gui.setSlot(10, new GuiElementBuilder()
                             .setItem(Items.DIAMOND_SWORD)
                             .setName(Text.translatable("gui.ygasi.mercenary.offence1"))

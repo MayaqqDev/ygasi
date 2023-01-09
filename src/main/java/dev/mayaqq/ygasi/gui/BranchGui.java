@@ -1,6 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.util.YgasiUtils;
+import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.*;
 
 import net.minecraft.item.ItemStack;
@@ -18,9 +18,9 @@ import net.minecraft.util.Identifier;
 
 public class BranchGui {
     public static void gui(ServerPlayerEntity player) {
+        Text cost = Text.of("§3" + ConfigRegistry.CONFIG.branchCost);
         try {
             SkillGui gui = new SkillGui(ScreenHandlerType.GENERIC_9X3, player, false) {};
-
             //the title of the gui
             gui.setTitle(Text.translatable("gui.ygasi.branch.title", player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))).formatted(Formatting.DARK_AQUA));
 
@@ -48,12 +48,12 @@ public class BranchGui {
 
             //branch items
             //mercenary gui button
-            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
+            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
                 gui.setSlot(11, new GuiElementBuilder()
                         .setItem(Items.DIAMOND_SWORD)
                         .setCustomModelData(1)
                         .hideFlag(ItemStack.TooltipSection.MODIFIERS)
-                        .addLoreLine(Text.translatable("gui.ygasi.branch.cost", ConfigRegistry.CONFIG.branchCost))
+                        .addLoreLine(Text.translatable("gui.ygasi.branch.cost", cost))
                         .setName(Text.translatable("gui.ygasi.branch.mercenary.title").formatted(Formatting.BOLD))
                         .setCallback((index, clickType, actionType) -> save(player, "mercenary", "gui.ygasi.branch.mercenary.title"))
                 );
@@ -68,10 +68,10 @@ public class BranchGui {
             }
 
             //wizardry gui button
-            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry")) {
+            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry")) {
                 gui.setSlot(13, new GuiElementBuilder()
                         .setItem(Items.BLAZE_ROD)
-                        .addLoreLine(Text.translatable("gui.ygasi.branch.cost", ConfigRegistry.CONFIG.branchCost))
+                        .addLoreLine(Text.translatable("gui.ygasi.branch.cost", cost))
                         .setName(Text.translatable("gui.ygasi.branch.wizardry.title").formatted(Formatting.BOLD))
                         .setCallback((index, clickType, actionType) -> save(player, "wizardry", "gui.ygasi.branch.wizardry.title"))
                 );
@@ -85,10 +85,10 @@ public class BranchGui {
             }
 
             //druidry gui button
-            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry")) {
+            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry")) {
                 gui.setSlot(15, new GuiElementBuilder()
                         .setItem(Items.OAK_SAPLING)
-                        .addLoreLine(Text.translatable("gui.ygasi.branch.cost", ConfigRegistry.CONFIG.branchCost))
+                        .addLoreLine(Text.translatable("gui.ygasi.branch.cost", cost))
                         .setName(Text.translatable("gui.ygasi.branch.druidry.title").formatted(Formatting.BOLD))
                         .setCallback((index, clickType, actionType) -> save(player, "druidry", "gui.ygasi.branch.druidry.title"))
                 );
@@ -102,10 +102,10 @@ public class BranchGui {
             }
 
             //extra gui button
-            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/extra")) {
+            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/extra")) {
                 gui.setSlot(26, new GuiElementBuilder()
                         .setItem(Items.BOOK)
-                        .addLoreLine(Text.translatable("gui.ygasi.branch.cost", ConfigRegistry.CONFIG.branchCost / 2))
+                        .addLoreLine(Text.translatable("gui.ygasi.branch.cost", Text.of("§3" + ConfigRegistry.CONFIG.branchCost / 2)))
                         .setName(Text.translatable("gui.ygasi.branch.extra.title").formatted(Formatting.BOLD))
                         .setCallback((index, clickType, actionType) -> save(player, "extra", "gui.ygasi.branch.extra.title"))
                 );
@@ -137,7 +137,7 @@ public class BranchGui {
             );
 
             //grant the player the root advancement of ygasi
-            YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/root"), "opened_skill_menu");
+            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/root"), "opened_skill_menu");
 
             gui.open();
         } catch (Exception e) {
@@ -146,43 +146,68 @@ public class BranchGui {
     }
     //this happens when you try to unlock a branch
     public static void save(ServerPlayerEntity player, String branch, String branchName) {
+        Boolean hasMercenary = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary");
+        Boolean hasWizadry = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry");
+        Boolean hasDrudiry = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry");
         //special category for extra branch because it's half the price
         if (branch.equals("extra")) {
             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost / 2) {
+                //remove the spent skill points
                 player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost / 2);
-                YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/extra"), "unlocked_extra");
+                AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/extra"), "unlocked_extra");
                 player.sendMessage(Text.translatable("gui.ygasi.branch.unlock", Text.translatable(branchName)), false);
                 ExtraGui.gui(player);
             } else {
                 player.sendMessage(Text.translatable("gui.ygasi.branch.no.skill"), false);
             }
-            //the rest of the branches
+        //the rest of the branches
         } else {
             //same code as in extra
             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost) {
-                player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost);
-                player.sendMessage(Text.translatable("gui.ygasi.branch.unlock", Text.translatable(branchName)), false);
-                player.closeHandledScreen();
                 //grant the player the advancement of the branch they unlocked
                 switch (branch) {
                     case "mercenary" -> {
-                        YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/mercenary"), "unlocked_mercenary");
-                        MercenaryGui.gui(player);
+                        if (hasWizadry || hasDrudiry) {
+                            player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
+                        } else {
+                            hasMercenary = true;
+                            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/mercenary"), "unlocked_mercenary");
+                            MercenaryGui.gui(player);
+                            unlockSuccess(player, branchName);
+                        }
                     }
                     case "wizardry" -> {
-                        YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/wizardry"), "unlocked_wizardry");
-                        WizardryGui.gui(player);
+                        if (hasMercenary || hasDrudiry) {
+                            player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
+                        } else {
+                            hasWizadry = true;
+                            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/wizardry"), "unlocked_wizardry");
+                            WizardryGui.gui(player);
+                            unlockSuccess(player, branchName);
+                        }
                     }
                     case "druidry" -> {
-                        YgasiUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/druidry"), "unlocked_druidry");
-                        DruidryGui.gui(player);
+                        if (hasMercenary || hasWizadry) {
+                            player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
+                        } else {
+                            hasDrudiry = true;
+                            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/druidry"), "unlocked_druidry");
+                            DruidryGui.gui(player);
+                            unlockSuccess(player, branchName);
+                        }
                     }
                 }
-                //if the player doesn't have enough skill points
+                player.closeHandledScreen();
+            //if the player doesn't have enough skill points
             } else {
                 player.sendMessage(Text.translatable("gui.ygasi.branch.no.skill"), false);
                 player.closeHandledScreen();
             }
         }
+    }
+    private static void unlockSuccess(ServerPlayerEntity player, String branchName) {
+        player.sendMessage(Text.translatable("gui.ygasi.branch.unlock", Text.translatable(branchName)), false);
+        //remove the spent skill points
+        player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost);
     }
 }

@@ -5,11 +5,11 @@
   "creative.ygasi.group": "Ygasi",
 
   "commands.ygasi.skillpoints.reset": "Skill Points reset to 0 for %s.",
-  "commands.ygasi.skillpoints.add": "Skill Points increased by %d for %s.",
-  "commands.ygasi.skillpoints.get": "%s has %d unspent Skill Points and %d total Skill Points.",
+  "commands.ygasi.skillpoints.add": "Skill Points increased by %s for %s.",
+  "commands.ygasi.skillpoints.get": "%s has %s unspent Skill Points and %s total Skill Points.",
   "commands.ygasi.config.reload": "Config reloaded.",
 
-  "gui.ygasi.branch.title": "Skill Points: %d",
+  "gui.ygasi.branch.title": "Skill Points: %s",
     "gui.ygasi.branch.mercenary.title": "§c§lMercenary",
     "gui.ygasi.branch.wizardry.title": "§5§lWizardry",
     "gui.ygasi.branch.druidry.title": "§a§lDruidry",
@@ -20,9 +20,10 @@
   "gui.ygasi.branch.reset.title": "§4§lReset",
       "gui.ygasi.branch.reset.lore": "§8This will reset all your skills and give you back all of your skill points.",
       "gui.ygasi.branch.reset.lore2": "§c§lThis action cannot be undone.",
-  "gui.ygasi.branch.cost": "§3Cost: %d",
-  "gui.ygasi.branch.unlock": "§aYou have unlocked the %s branch!",
+  "gui.ygasi.branch.cost": "§3Cost: %s",
+  "gui.ygasi.branch.unlock": "§aYou have unlocked the %s §abranch!",
   "gui.ygasi.branch.no.skill": "§cYou don't have enough skill points to unlock this branch!",
+  "gui.ygasi.branch.no.unlock": "§cYou already have a branch unlocked!",
 
   "gui.ygasi.reset.confirm.title": "§a§lConfirm",
     "gui.ygasi.reset.confirm.lore": "§8Are you sure?",

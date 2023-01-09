@@ -1,6 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.util.YgasiUtils;
+import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
@@ -14,7 +14,7 @@ public class DruidryGui {
     public static void gui(ServerPlayerEntity player) {
         String title = Text.translatable("gui.ygasi.branch.druidry.title").getString() + " " + Text.translatable("gui.ygasi.branch.title", player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))).getString();
         try {
-            if (!YgasiUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry")) {
+            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry")) {
                 player.sendMessage(Text.translatable("gui.ygasi.branches.fail"), false);
                 BranchGui.gui(player);
             } else {

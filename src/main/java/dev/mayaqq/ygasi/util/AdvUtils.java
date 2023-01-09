@@ -5,17 +5,16 @@ import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.server.ServerAdvancementLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
 
 import static dev.mayaqq.ygasi.Ygasi.LOGGER;
 
-public class YgasiUtils {
-    public static void grantAdvancementCriterion(@NotNull ServerPlayerEntity serverPlayerEntity, Identifier advancementIdentifier, String criterion) {
-        if (serverPlayerEntity.getServer() == null) {
+public class AdvUtils {
+    public static void grantAdvancementCriterion(ServerPlayerEntity player, Identifier advancementIdentifier, String criterion) {
+        if (player.getServer() == null) {
             return;
         }
-        ServerAdvancementLoader sal = serverPlayerEntity.getServer().getAdvancementLoader();
-        PlayerAdvancementTracker tracker = serverPlayerEntity.getAdvancementTracker();
+        ServerAdvancementLoader sal = player.getServer().getAdvancementLoader();
+        PlayerAdvancementTracker tracker = player.getAdvancementTracker();
 
         Advancement advancement = sal.get(advancementIdentifier);
         if (advancement == null) {

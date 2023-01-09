@@ -91,7 +91,6 @@ public class ConfigGui {
         gui.open();
     }
 
-
     private static void textInput(ServerPlayerEntity player, String option) {
         try {
             SignGui gui = new SignGui(player) {
