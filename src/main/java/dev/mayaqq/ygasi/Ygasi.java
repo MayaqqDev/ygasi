@@ -12,6 +12,7 @@ public class Ygasi implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		//load the config data and register everything that needs to be registered on startup
+		//test
 		ConfigRegistry.load();
 		ItemRegistry.register();
 		StatRegistry.register();
@@ -20,6 +21,6 @@ public class Ygasi implements ModInitializer {
 
 		Frog.blender();
 
-		LOGGER.info("You've Got A Skill Issue (YGASI has been initialized!)");
+		LOGGER.info("You've Got A Skill Issue! (YGASI has been initialized!)");
 	}
 }
