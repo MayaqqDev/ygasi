@@ -2,10 +2,12 @@ package dev.mayaqq.ygasi.events;
 
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import dev.mayaqq.ygasi.util.AdvUtils;
+import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
+import static dev.mayaqq.ygasi.Ygasi.LOGGER;
 import static dev.mayaqq.ygasi.registry.ItemRegistry.SKILL_BOOK;
 
 public class PlayerConnectEvent {

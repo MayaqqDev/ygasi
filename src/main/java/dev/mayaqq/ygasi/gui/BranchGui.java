@@ -146,9 +146,9 @@ public class BranchGui {
     }
     //this happens when you try to unlock a branch
     public static void save(ServerPlayerEntity player, String branch, String branchName) {
-        Boolean hasMercenary = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary");
-        Boolean hasWizadry = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry");
-        Boolean hasDrudiry = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry");
+        boolean hasMercenary = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary");
+        boolean hasWizadry = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry");
+        boolean hasDrudiry = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry");
         //special category for extra branch because it's half the price
         if (branch.equals("extra")) {
             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost / 2) {

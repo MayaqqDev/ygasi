@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.function.Consumer;
 
-public class Advancements implements Consumer<Consumer<Advancement>> {
+public class YgasiAdvancements implements Consumer<Consumer<Advancement>> {
 
     @Override
     public void accept(Consumer<Advancement> consumer) {

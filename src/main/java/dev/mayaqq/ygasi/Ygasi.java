@@ -3,11 +3,13 @@ package dev.mayaqq.ygasi;
 import dev.mayaqq.ygasi.registry.*;
 import dev.mayaqq.ygasi.secrete.Frog;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Ygasi implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("ygasi");
+	public static Identifier click = new Identifier("ui.button.click");
 
 	@Override
 	public void onInitialize() {

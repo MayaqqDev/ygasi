@@ -8,8 +8,10 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+
+import static dev.mayaqq.ygasi.Ygasi.click;
 
 public class ConfigGui {
 
@@ -30,7 +32,6 @@ public class ConfigGui {
                 .addLoreLine(Text.translatable("config.ygasi.current").append(Text.of(String.valueOf(ConfigRegistry.CONFIG.pointsRewarded))))
                 .setCallback((index, clickType, actionType) -> {
                     textInput(player, "pointsRewarded");
-                    player.playSound(SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 })
         );
 
@@ -40,7 +41,6 @@ public class ConfigGui {
                 .addLoreLine(Text.translatable("config.ygasi.current").append(Text.of(String.valueOf(ConfigRegistry.CONFIG.branchCost))))
                 .setCallback((index, clickType, actionType) -> {
                     textInput(player, "branchCost");
-                    player.playSound(SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 })
         );
 
@@ -50,9 +50,9 @@ public class ConfigGui {
                 .addLoreLine(Text.translatable("config.ygasi.current").append(Text.of(String.valueOf(ConfigRegistry.CONFIG.enableSkillBook))))
                 .setCallback((index, clickType, actionType) -> {
                     ConfigRegistry.CONFIG.enableSkillBook = !ConfigRegistry.CONFIG.enableSkillBook;
+                    player.playSound(SoundEvent.of(click), SoundCategory.PLAYERS, 1.0F, 1.0F);
                     gui.close();
                     gui(player);
-                    player.playSound(SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 })
         );
 
@@ -62,7 +62,6 @@ public class ConfigGui {
                 .addLoreLine(Text.translatable("config.ygasi.current").append(Text.of(String.valueOf(ConfigRegistry.CONFIG.T1Cost))))
                 .setCallback((index, clickType, actionType) -> {
                     textInput(player, "T1Cost");
-                    player.playSound(SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 })
         );
 
@@ -73,7 +72,6 @@ public class ConfigGui {
                 .addLoreLine(Text.translatable("config.ygasi.current").append(Text.of(String.valueOf(ConfigRegistry.CONFIG.T2Cost))))
                 .setCallback((index, clickType, actionType) -> {
                     textInput(player, "T2Cost");
-                    player.playSound(SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 })
         );
 
@@ -84,7 +82,6 @@ public class ConfigGui {
                 .addLoreLine(Text.translatable("config.ygasi.current").append(Text.of(String.valueOf(ConfigRegistry.CONFIG.T3Cost))))
                 .setCallback((index, clickType, actionType) -> {
                     textInput(player, "T3Cost");
-                    player.playSound(SoundEvents.UI_BUTTON_CLICK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 })
         );
 
@@ -92,6 +89,7 @@ public class ConfigGui {
     }
 
     private static void textInput(ServerPlayerEntity player, String option) {
+        player.playSound(SoundEvent.of(click), SoundCategory.PLAYERS, 1.0F, 1.0F);
         try {
             SignGui gui = new SignGui(player) {
                 @Override
@@ -101,35 +99,35 @@ public class ConfigGui {
                             try {
                                 ConfigRegistry.CONFIG.pointsRewarded = Integer.parseInt(this.getLine(0).getString());
                             } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), false);
+                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
                             }
                         }
                         case "branchCost" -> {
                             try {
                                 ConfigRegistry.CONFIG.branchCost = Integer.parseInt(this.getLine(0).getString());
                             } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), false);
+                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
                             }
                         }
                         case "T1Cost" -> {
                             try {
                                 ConfigRegistry.CONFIG.T1Cost = Integer.parseInt(this.getLine(0).getString());
                             } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), false);
+                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
                             }
                         }
                         case "T2Cost" -> {
                             try {
                                 ConfigRegistry.CONFIG.T2Cost = Integer.parseInt(this.getLine(0).getString());
                             } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), false);
+                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
                             }
                         }
                         case "T3Cost" -> {
                             try {
                                 ConfigRegistry.CONFIG.T3Cost = Integer.parseInt(this.getLine(0).getString());
                             } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), false);
+                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
                             }
                         }
                     }

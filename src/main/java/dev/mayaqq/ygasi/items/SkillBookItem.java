@@ -1,8 +1,8 @@
 package dev.mayaqq.ygasi.items;
 
 import dev.mayaqq.ygasi.gui.BranchGui;
-import eu.pb4.polymer.api.item.PolymerItemUtils;
-import eu.pb4.polymer.api.item.SimplePolymerItem;
+import eu.pb4.polymer.core.api.item.PolymerItemUtils;
+import eu.pb4.polymer.core.api.item.SimplePolymerItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -25,11 +25,6 @@ public class SkillBookItem extends SimplePolymerItem {
     }
 
     @Override
-    public ItemStack getPolymerItemStack(ItemStack itemStack, ServerPlayerEntity player) {
-        return PolymerItemUtils.createItemStack(itemStack, player);
-    }
-
-    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
         ServerPlayerEntity player = (ServerPlayerEntity) playerEntity;
         BranchGui.gui(player);
@@ -38,7 +33,7 @@ public class SkillBookItem extends SimplePolymerItem {
 
     @Override
     public int getPolymerCustomModelData(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
-        return 1;
+        return 2;
     }
 
     @Override
