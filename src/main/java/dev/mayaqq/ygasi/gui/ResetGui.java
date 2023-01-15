@@ -35,16 +35,16 @@ public class ResetGui {
                 .setName(Text.translatable("gui.ygasi.reset.confirm.title"))
                 .addLoreLine(Text.translatable("gui.ygasi.reset.confirm.lore"))
                 .setCallback((index, clickType, actionType) -> {
-                    reset(player);
-                    BranchGui.gui(player);
                     if (player.experienceLevel >= ConfigRegistry.CONFIG.resetCost) {
+                        reset(player);
                         player.closeHandledScreen();
                         player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
                         player.experienceLevel -= ConfigRegistry.CONFIG.resetCost;
-
+                        BranchGui.gui(player);
                     } else {
                         player.sendMessage(Text.translatable("gui.ygasi.reset.fail"), true);
-                        player.closeHandledScreen();
+                        gui.close();
+                        BranchGui.gui(player);
                     }
                 })
         );

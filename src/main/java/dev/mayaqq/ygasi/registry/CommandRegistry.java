@@ -1,22 +1,15 @@
 package dev.mayaqq.ygasi.registry;
 
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.context.CommandContext;
 import dev.mayaqq.ygasi.gui.*;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.io.File;
-
-import static dev.mayaqq.ygasi.Ygasi.LOGGER;
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS_TOTAL;
 import static net.minecraft.server.command.CommandManager.literal;

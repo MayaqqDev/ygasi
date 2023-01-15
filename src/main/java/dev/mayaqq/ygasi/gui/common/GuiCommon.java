@@ -44,7 +44,7 @@ public class GuiCommon {
                 .hideFlag(ItemStack.TooltipSection.MODIFIERS)
                 .setName(Text.translatable(nameKey))
                 .addLoreLine(Text.translatable(nameKey + ".lore"))
-                .addLoreLine(Text.translatable("gui.ygasi.branches.lore.cost", Text.of("§8"+ cost)))
+                .addLoreLine(Text.translatable("gui.ygasi.branch.cost", Text.of("§8" + cost)))
                 .setCallback((index, clickType, actionType) -> {
                             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= cost) {
                                 try {
