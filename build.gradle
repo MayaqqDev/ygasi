@@ -1,29 +1,23 @@
 plugins {
 	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id 'maven-publish'
+	id "com.modrinth.minotaur" version "2.+"
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
+
+DuplicatesStrategy.INCLUDE
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
 repositories {
+	//maven repos
 	maven { url 'https://maven.nucleoid.xyz' }
 	maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
-	exclusiveContent {
-		forRepository {
-			maven {
-				name = "Modrinth"
-				url = "https://api.modrinth.com/maven"
-			}
-		}
-		filter {
-			includeGroup "maven.modrinth"
-		}
-	}
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -32,16 +26,17 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
+	// Fabric API
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+	//external dependencies
 	modImplementation include("eu.pb4:sgui:${project.sgui_version}")
 	modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
 	modImplementation include("fr.catcore:server-translations-api:${project.sta_version}")
+	modImplementation ("com.github.DaFuqs:Revelationary:${project.revelationary_version}")
 
-	modImplementation "maven.modrinth:Revelationary:1.1.0"
-
+	//runtime only for development
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.1.0")
 }
 
@@ -72,7 +67,7 @@ jar {
 	}
 }
 
-// configure the maven publication
+// maven publishing
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
@@ -90,10 +85,9 @@ publishing {
 }
 
 loom {
+	log4jConfigs.from(file("log4j2.xml"))
 	runs {
-		//
-		// This adds a new gradle task that runs the datagen API: "gradlew runDatagenClient"
-		//
+		//datagen
 		datagen {
 			server()
 
@@ -106,10 +100,9 @@ loom {
 		}
 	}
 }
-//
-// Adds the generated files into the jar you distribute to players.
-//
+
 sourceSets {
+	//add resources to the compiled jar
 	main {
 		resources {
 			srcDirs += [
@@ -118,3 +111,19 @@ sourceSets {
 		}
 	}
 }
+
+import com.modrinth.minotaur.dependencies.ModDependency
+
+modrinth {
+	token = System.getenv('MODRINTH_TOKEN') // Please use an environment variable for this! The default is `$MODRINTH_TOKEN`.
+	projectId = "${project.modrinth_id}" // The ID of your Modrinth project. Slugs will not work.
+	versionNumber = "${project.mod_version}" // The (preferably SemVer) version of the mod. If not specified, it'll use the `version` declaration
+	versionName = "${project.mod_version}" // The version title. If not specified, it'll use the version number
+	uploadFile = remapJar // Tells Minotaur to use the remapped jar
+	gameVersions = ["${project.minecraft_version}"] // An array of game versions the version supports
+	loaders = ['fabric', 'quilt'] // Self-explanatory.
+	dependencies = [
+			new ModDependency('P7dR8mSH', 'required') // Creates a new required dependency on Fabric API
+	]
+}
+

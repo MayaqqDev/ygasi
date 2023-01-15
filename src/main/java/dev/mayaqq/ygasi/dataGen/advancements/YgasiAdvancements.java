@@ -22,7 +22,7 @@ public class YgasiAdvancements implements Consumer<Consumer<Advancement>> {
                 Text.translatable("advancements.ygasi.root.description"), // The description
                 new Identifier("textures/block/sculk_catalyst_top.png"), // Background image used
                 AdvancementFrame.CHALLENGE, // Options: TASK, CHALLENGE, GOAL
-                true, // Show toast top right
+                false, // Show toast top right
                 false, // Announce to chat
                 false // Hidden in the advancement tab
         ).criterion("opened_skill_menu", new ImpossibleCriterion.Conditions()).rewards(AdvancementRewards.Builder.experience(1)).build(consumer, "ygasi" + "/root");

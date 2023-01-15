@@ -15,7 +15,7 @@
     "icon": {
       "item": "minecraft:diamond"
     },
-    "show_toast": true,
+    "show_toast": false,
     "title": {
       "translate": "advancements.ygasi.root.title"
     }

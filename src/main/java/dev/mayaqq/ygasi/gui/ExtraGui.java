@@ -1,5 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
+import dev.mayaqq.ygasi.gui.common.SkillGui;
 import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.minecraft.item.Items;

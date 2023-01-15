@@ -1,5 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
+import dev.mayaqq.ygasi.gui.common.SkillGui;
 import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.*;
 
@@ -7,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -16,13 +19,17 @@ import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import net.minecraft.util.Identifier;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
 public class BranchGui {
     public static void gui(ServerPlayerEntity player) {
         Text cost = Text.of("§3" + ConfigRegistry.CONFIG.branchCost);
         try {
             SkillGui gui = new SkillGui(ScreenHandlerType.GENERIC_9X3, player, false) {};
             //the title of the gui
-            gui.setTitle(Text.translatable("gui.ygasi.branch.title", player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))).formatted(Formatting.DARK_AQUA));
+            gui.setTitle(Text.translatable("gui.ygasi.branch.title", Text.of("§3" + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)))));
 
             //background items
             for (int x = 0; x <= 26; x++) {
@@ -133,6 +140,7 @@ public class BranchGui {
                     .setName(Text.translatable("gui.ygasi.branch.reset.title"))
                     .addLoreLine(Text.translatable("gui.ygasi.branch.reset.lore"))
                     .addLoreLine(Text.translatable("gui.ygasi.branch.reset.lore2"))
+                    .addLoreLine(Text.translatable("gui.ygasi.branch.reset.lore3", Text.of("§8" + ConfigRegistry.CONFIG.resetCost)))
                     .setCallback((index, clickType, actionType) -> ResetGui.gui(player))
             );
 
@@ -162,51 +170,47 @@ public class BranchGui {
             }
         //the rest of the branches
         } else {
-            //same code as in extra
             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost) {
                 //grant the player the advancement of the branch they unlocked
-                switch (branch) {
-                    case "mercenary" -> {
-                        if (hasWizadry || hasDrudiry) {
-                            player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
-                        } else {
-                            hasMercenary = true;
-                            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/mercenary"), "unlocked_mercenary");
-                            MercenaryGui.gui(player);
-                            unlockSuccess(player, branchName);
-                        }
-                    }
-                    case "wizardry" -> {
-                        if (hasMercenary || hasDrudiry) {
-                            player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
-                        } else {
-                            hasWizadry = true;
-                            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/wizardry"), "unlocked_wizardry");
-                            WizardryGui.gui(player);
-                            unlockSuccess(player, branchName);
-                        }
-                    }
-                    case "druidry" -> {
-                        if (hasMercenary || hasWizadry) {
-                            player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
-                        } else {
-                            hasDrudiry = true;
-                            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/druidry"), "unlocked_druidry");
-                            DruidryGui.gui(player);
-                            unlockSuccess(player, branchName);
-                        }
+                final Map<String, Class<?>> BRANCH_TO_GUI = new HashMap<>() {{
+                    put("mercenary", MercenaryGui.class);
+                    put("wizardry", WizardryGui.class);
+                    put("druidry", DruidryGui.class);
+                }};
+
+                final Map<String, String> BRANCH_TO_ADVANCEMENT = new HashMap<>() {{
+                    put("mercenary", "unlocked_mercenary");
+                    put("wizardry", "unlocked_wizardry");
+                    put("druidry", "unlocked_druidry");
+                }};
+
+                Identifier advancementId = new Identifier("minecraft", "ygasi/" + branch);
+                String advancementCriterion = BRANCH_TO_ADVANCEMENT.get(branch);
+                Class<?> guiClass = BRANCH_TO_GUI.get(branch);
+                if (hasMercenary || hasWizadry || hasDrudiry) {
+                    player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
+                    player.closeHandledScreen();
+                } else {
+                    AdvUtils.grantAdvancementCriterion(player, advancementId, advancementCriterion);
+                    unlockSuccess(player, branchName);
+                    try {
+                        Method guiMethod = guiClass.getMethod("gui", ServerPlayerEntity.class);
+                        guiMethod.invoke(null, player);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-                player.closeHandledScreen();
+
             //if the player doesn't have enough skill points
             } else {
-                player.sendMessage(Text.translatable("gui.ygasi.branch.no.skill"), false);
+                player.sendMessage(Text.translatable("gui.ygasi.branch.no.skill"), true);
                 player.closeHandledScreen();
             }
         }
     }
     private static void unlockSuccess(ServerPlayerEntity player, String branchName) {
-        player.sendMessage(Text.translatable("gui.ygasi.branch.unlock", Text.translatable(branchName)), false);
+        player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
+        player.sendMessage(Text.translatable("gui.ygasi.branch.unlock", Text.translatable(branchName)), true);
         //remove the spent skill points
         player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost);
     }

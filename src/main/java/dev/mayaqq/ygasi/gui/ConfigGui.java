@@ -11,6 +11,8 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 
+import java.lang.reflect.Field;
+
 import static dev.mayaqq.ygasi.Ygasi.click;
 
 public class ConfigGui {
@@ -57,6 +59,15 @@ public class ConfigGui {
         );
 
         gui.setSlot(3, new GuiElementBuilder()
+                .setItem(Items.RED_TERRACOTTA)
+                .setName(Text.translatable("config.ygasi.resetCost.title"))
+                .addLoreLine(Text.translatable("config.ygasi.current").append(Text.of(String.valueOf(ConfigRegistry.CONFIG.resetCost))))
+                .setCallback((index, clickType, actionType) -> {
+                    textInput(player, "resetCost");
+                })
+        );
+
+        gui.setSlot(4, new GuiElementBuilder()
                 .setItem(Items.STICK)
                 .setName(Text.translatable("config.ygasi.T1Cost.title"))
                 .addLoreLine(Text.translatable("config.ygasi.current").append(Text.of(String.valueOf(ConfigRegistry.CONFIG.T1Cost))))
@@ -65,7 +76,7 @@ public class ConfigGui {
                 })
         );
 
-        gui.setSlot(4, new GuiElementBuilder()
+        gui.setSlot(5, new GuiElementBuilder()
                 .setItem(Items.STICK)
                 .setCount(2)
                 .setName(Text.translatable("config.ygasi.T2Cost.title"))
@@ -75,7 +86,7 @@ public class ConfigGui {
                 })
         );
 
-        gui.setSlot(5, new GuiElementBuilder()
+        gui.setSlot(6, new GuiElementBuilder()
                 .setItem(Items.STICK)
                 .setCount(3)
                 .setName(Text.translatable("config.ygasi.T3Cost.title"))
@@ -94,42 +105,12 @@ public class ConfigGui {
             SignGui gui = new SignGui(player) {
                 @Override
                 public void onClose() {
-                    switch (option) {
-                        case "pointsRewarded" -> {
-                            try {
-                                ConfigRegistry.CONFIG.pointsRewarded = Integer.parseInt(this.getLine(0).getString());
-                            } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
-                            }
-                        }
-                        case "branchCost" -> {
-                            try {
-                                ConfigRegistry.CONFIG.branchCost = Integer.parseInt(this.getLine(0).getString());
-                            } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
-                            }
-                        }
-                        case "T1Cost" -> {
-                            try {
-                                ConfigRegistry.CONFIG.T1Cost = Integer.parseInt(this.getLine(0).getString());
-                            } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
-                            }
-                        }
-                        case "T2Cost" -> {
-                            try {
-                                ConfigRegistry.CONFIG.T2Cost = Integer.parseInt(this.getLine(0).getString());
-                            } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
-                            }
-                        }
-                        case "T3Cost" -> {
-                            try {
-                                ConfigRegistry.CONFIG.T3Cost = Integer.parseInt(this.getLine(0).getString());
-                            } catch (NumberFormatException e) {
-                                player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
-                            }
-                        }
+                    try {
+                        Field field = ConfigRegistry.CONFIG.getClass().getDeclaredField(option);
+                        field.setAccessible(true);
+                        field.set(ConfigRegistry.CONFIG, Integer.parseInt(this.getLine(0).getString()));
+                    } catch (Exception e) {
+                        player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
                     }
                     gui(player);
                 }

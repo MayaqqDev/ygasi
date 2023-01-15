@@ -1,5 +1,9 @@
 package dev.mayaqq.ygasi.gui;
 
+import dev.mayaqq.ygasi.abilities.mercenary.Offence1;
+import dev.mayaqq.ygasi.abilities.mercenary.Offence2;
+import dev.mayaqq.ygasi.gui.common.SkillGui;
+import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.minecraft.item.Items;
@@ -30,7 +34,19 @@ public class ResetGui {
                 .setItem(Items.GREEN_CONCRETE)
                 .setName(Text.translatable("gui.ygasi.reset.confirm.title"))
                 .addLoreLine(Text.translatable("gui.ygasi.reset.confirm.lore"))
-                .setCallback((index, clickType, actionType) -> reset(player))
+                .setCallback((index, clickType, actionType) -> {
+                    reset(player);
+                    BranchGui.gui(player);
+                    if (player.experienceLevel >= ConfigRegistry.CONFIG.resetCost) {
+                        player.closeHandledScreen();
+                        player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        player.experienceLevel -= ConfigRegistry.CONFIG.resetCost;
+
+                    } else {
+                        player.sendMessage(Text.translatable("gui.ygasi.reset.fail"), true);
+                        player.closeHandledScreen();
+                    }
+                })
         );
 
         gui.setSlot(14, new GuiElementBuilder()
@@ -44,17 +60,14 @@ public class ResetGui {
     }
     public static void reset(ServerPlayerEntity player) {
         //check if player experience level is greater than 10
-        if (player.experienceLevel >= 10) {
-            player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
-            player.experienceLevel -= 10;
-            player.closeHandledScreen();
-            AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/");
-            player.sendMessage(Text.translatable("gui.ygasi.reset.success"), false);
-            player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL)));
-            BranchGui.gui(player);
-        } else {
-            player.sendMessage(Text.translatable("gui.ygasi.reset.fail"), false);
-            player.closeHandledScreen();
+        //revoke the abilities first
+        if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
+            Offence1.revoke(player);
+            Offence2.revoke(player);
         }
+        AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/");
+        player.sendMessage(Text.translatable("gui.ygasi.reset.success"), true);
+        player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL)));
+
     }
 }

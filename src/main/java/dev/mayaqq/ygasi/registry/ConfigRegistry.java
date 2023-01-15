@@ -11,7 +11,7 @@ public class ConfigRegistry {
     public static Config CONFIG = new Config();
 
     static File modConfFolder = new File(FabricLoader.getInstance().getConfigDir().toFile(),"ygasi");
-    private static File configFile = new File(modConfFolder,"config.json");
+    private static final File configFile = new File(modConfFolder,"config.json");
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static void load() {
@@ -50,9 +50,11 @@ public class ConfigRegistry {
         public int pointsRewarded = 1;
         public int branchCost = 16;
         public Boolean enableSkillBook = true;
+        public int resetCost = 10;
         public int T1Cost = 5;
         public int T2Cost = 10;
         public int T3Cost = 15;
+        public int offence1DefIncrease = 3;
 
         public Config() {}
     }

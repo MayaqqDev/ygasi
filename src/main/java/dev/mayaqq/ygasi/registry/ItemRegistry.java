@@ -13,8 +13,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ItemRegistry {
-    public static final SkillBookItem SKILL_BOOK = new SkillBookItem(new Item.Settings().maxCount(1), Items.BOOK);
+    public static final SkillBookItem SKILL_BOOK = Registry.register(Registries.ITEM, new Identifier("ygasi", "skill_book"), new SkillBookItem(new Item.Settings().maxCount(1), Items.BOOK));
+
     public static void register() {
+        //Register item group
         PolymerItemGroupUtils.builder(new Identifier("ygasi", "ygasi"))
                 .displayName(Text.translatable("creative.ygasi.group"))
                 .icon(() -> new ItemStack(Items.BOOK))
@@ -22,9 +24,8 @@ public class ItemRegistry {
                     entries.add(SKILL_BOOK);
                 })
     .build();
+        //Register item model
         PolymerResourcePackUtils.addModAssets("ygasi");
         PolymerModelData skillBookModelData = PolymerResourcePackUtils.requestModel(Items.BOOK, new Identifier("ygasi", "item/skill_book"));
-
-        Registry.register(Registries.ITEM, new Identifier("ygasi", "skill_book"), SKILL_BOOK);
     }
 }

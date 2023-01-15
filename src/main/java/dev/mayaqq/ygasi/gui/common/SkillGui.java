@@ -1,4 +1,4 @@
-package dev.mayaqq.ygasi.gui;
+package dev.mayaqq.ygasi.gui.common;
 
 import eu.pb4.sgui.api.gui.SimpleGui;
 import net.minecraft.screen.ScreenHandlerType;
