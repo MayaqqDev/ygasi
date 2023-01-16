@@ -14,7 +14,7 @@ You've got a Skill Issue is a Minecraft Server-side mod Implementing a new skill
 
 When you load up, you will get a skill book to kick start your journey, if you lose your book don't worry! you can always craft it like this:
 
-![Recipe](https://raw.githubusercontent.com/MayaqqDev/ygasi/1.19/recipe.png)
+![Recipe](https://raw.githubusercontent.com/MayaqqDev/ygasi/1.19.3/skill_book_recipe.png)
 
 After opening the book, you will get greeted by 3 branches and one extra branch. But... how do I unlock the skill points to unlock those? Well! Its quite simple! Just unlock normal minecraft advanceemnts(or any modded) and for each unlocked advancement you will get a singular Skill Point. When you get enough you can unlock a new branch and kick start your journey!
 
