@@ -1,5 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
+import dev.mayaqq.ygasi.Ygasi;
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.SignGui;
@@ -17,12 +18,16 @@ import static dev.mayaqq.ygasi.Ygasi.click;
 
 public class ConfigGui {
 
-    public static void gui(ServerPlayerEntity player) {
+    public static void gui(ServerPlayerEntity player, Boolean fromBranch) {
         SimpleGui gui = new SimpleGui(ScreenHandlerType.GENERIC_9X6, player, false) {
             @Override
             public void onClose() {
-                ConfigRegistry.save();
                 super.onClose();
+                ConfigRegistry.save();
+                if (fromBranch) {
+                    BranchGui.gui(player);
+                    player.playSound(SoundEvent.of(Ygasi.click), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                }
             }
         };
 
@@ -54,7 +59,7 @@ public class ConfigGui {
                     ConfigRegistry.CONFIG.enableSkillBook = !ConfigRegistry.CONFIG.enableSkillBook;
                     player.playSound(SoundEvent.of(click), SoundCategory.PLAYERS, 1.0F, 1.0F);
                     gui.close();
-                    gui(player);
+                    gui(player, false);
                 })
         );
 
@@ -112,7 +117,7 @@ public class ConfigGui {
                     } catch (Exception e) {
                         player.sendMessage(Text.translatable("config.ygasi.invalid.number"), true);
                     }
-                    gui(player);
+                    gui(player, false);
                 }
             };
             gui.open();

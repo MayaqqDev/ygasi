@@ -1,5 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
+import dev.mayaqq.ygasi.Ygasi;
 import dev.mayaqq.ygasi.gui.common.SkillGui;
 import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.*;
@@ -9,6 +10,7 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
@@ -157,6 +159,19 @@ public class BranchGui {
                     .setCallback((index, clickType, actionType) -> ResetGui.gui(player))
             );
 
+            //config button for admins
+            if (player.hasPermissionLevel(4)) {
+                gui.setSlot(0, new GuiElementBuilder()
+                        .setItem(Items.COMPARATOR)
+                        .setName(Text.translatable("gui.ygasi.branch.config.title"))
+                        .addLoreLine(Text.translatable("gui.ygasi.branch.config.lore"))
+                        .setCallback((index, clickType, actionType) -> {
+                            ConfigGui.gui(player, true);
+                            player.playSound(SoundEvent.of(Ygasi.click), SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        })
+                );
+            }
+
             //grant the player the root advancement of ygasi
             AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/root"), "opened_skill_menu");
 
@@ -191,21 +206,14 @@ public class BranchGui {
                     put("druidry", DruidryGui.class);
                 }};
 
-                final Map<String, String> BRANCH_TO_ADVANCEMENT = new HashMap<>() {{
-                    put("mercenary", "unlocked_mercenary");
-                    put("wizardry", "unlocked_wizardry");
-                    put("druidry", "unlocked_druidry");
-                }};
-
                 Identifier advancementId = new Identifier("minecraft", "ygasi/" + branch);
-                String advancementCriterion = BRANCH_TO_ADVANCEMENT.get(branch);
                 Class<?> guiClass = BRANCH_TO_GUI.get(branch);
                 if (hasMercenary || hasWizadry || hasDrudiry) {
                     player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
                     player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     player.closeHandledScreen();
                 } else {
-                    AdvUtils.grantAdvancementCriterion(player, advancementId, advancementCriterion);
+                    AdvUtils.grantAdvancementCriterion(player, advancementId, "unlocked_" + branch);
                     unlockSuccess(player, branchName);
                     try {
                         Method guiMethod = guiClass.getMethod("gui", ServerPlayerEntity.class);

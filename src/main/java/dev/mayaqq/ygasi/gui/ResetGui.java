@@ -63,6 +63,7 @@ public class ResetGui {
     public static void reset(ServerPlayerEntity player) {
         //check if player experience level is greater than 10
         //revoke the abilities first
+        AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/root");
         if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
             AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/mercenary");
             String[] subBranches = {"mercenary.Offence", "mercenary.Ninja", "mercenary.Defence"};
@@ -75,9 +76,8 @@ public class ResetGui {
     private static void resetBranch (String[] subBranches, ServerPlayerEntity player) {
         for (String subBranch : subBranches) {
             for (int i = 1; i < 4; i++) {
-                String branch = subBranch + i;
                 try {
-                    Class<?> branchClass = Class.forName("dev.mayaqq.ygasi.abilities." + branch);
+                    Class<?> branchClass = Class.forName("dev.mayaqq.ygasi.abilities." + subBranch + i);
                     branchClass.getMethod("revoke", ServerPlayerEntity.class).invoke(null, player);
 
                 } catch (Exception e) {

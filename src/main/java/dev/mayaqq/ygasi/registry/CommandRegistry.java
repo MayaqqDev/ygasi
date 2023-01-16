@@ -83,7 +83,7 @@ public class CommandRegistry {
                                     }))))
                 .then(literal("config")
                         .executes(context -> {
-                            ConfigGui.gui(context.getSource().getPlayer());
+                            ConfigGui.gui(context.getSource().getPlayer(), false);
                             return 1;
                         })
                         .then(literal("reload")
