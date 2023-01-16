@@ -16,6 +16,7 @@
     "gui.ygasi.branch.extra.title": "§9§lExtra",
     "gui.ygasi.branch.info.title": "§6§lInfo",
       "gui.ygasi.branch.info.main": "§6§lYgasi Skill Advancement System:\n§r§3When using Ygasi, every time you get an Advancement, you will get a §6Skill Point!§3 Then when you gather enough skill points throughout your journey you can unlock new interesting skills in the §6skill book§3 and improve your game experience, from protecting yourself from falling to summoning a horde of undead you can do everything with just a bit of patience, skill and fun!",
+  "gui.ygasi.branch.wip": "§c§l To be added in the future!",
 
   "gui.ygasi.branch.reset.title": "§4§lReset",
     "gui.ygasi.branch.reset.lore": "§8This will reset all your skills and give you back all of your skill points.",
@@ -35,6 +36,8 @@
 
   "gui.ygasi.branches.fail": "§cYou have not unlocked this branch yet!",
   "gui.ygasi.branches.no.skill": "§cYou don't have enough skill points to unlock this skill!",
+  "gui.ygasi.branches.no.previous": "§cYou have not unlocked the previous skill yet!",
+  "gui.ygasi.branches.back": "§cBack",
   "gui.ygasi.mercenary.offence1": "§cOffence I",
     "gui.ygasi.mercenary.offence1.lore": "§8Lore",
   "gui.ygasi.mercenary.offence2": "§cOffence II",

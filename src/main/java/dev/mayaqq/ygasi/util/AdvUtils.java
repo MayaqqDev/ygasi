@@ -26,7 +26,7 @@ public class AdvUtils {
         }
     }
 
-    public static void revokeAllAdvancements(ServerPlayerEntity player, String namespace ,String path) {
+    public static void revokeAllAdvancements(ServerPlayerEntity player, String namespace, String path) {
         if (player.getServer() == null) {
             return;
         }
@@ -47,5 +47,22 @@ public class AdvUtils {
             return false;
         }
         return player.getAdvancementTracker().getProgress(player.getServer().getAdvancementLoader().get(new Identifier(namespace, path))).isDone();
+    }
+
+    public static boolean hasBeforeAdvancements(ServerPlayerEntity player, String namespace, String path) {
+        int level = Integer.parseInt(path.substring(path.length() - 1));
+        if (player.getServer() == null) {
+            return false;
+        }
+        for (int i = 1; i < level; i++) {
+            try {
+                if (!getAdvancementProgress(player, namespace, path.substring(0, path.length() - 1) + i)) {
+                    return false;
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return true;
     }
 }

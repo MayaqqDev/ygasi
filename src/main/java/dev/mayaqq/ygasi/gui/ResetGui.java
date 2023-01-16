@@ -1,7 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.abilities.mercenary.Offence1;
-import dev.mayaqq.ygasi.abilities.mercenary.Offence2;
+import dev.mayaqq.ygasi.abilities.mercenary.*;
 import dev.mayaqq.ygasi.gui.common.SkillGui;
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import dev.mayaqq.ygasi.util.AdvUtils;
@@ -14,6 +13,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 
+import java.util.Arrays;
+
+import static dev.mayaqq.ygasi.Ygasi.LOGGER;
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS;
 import static dev.mayaqq.ygasi.registry.StatRegistry.SKILL_POINTS_TOTAL;
 
@@ -62,12 +64,26 @@ public class ResetGui {
         //check if player experience level is greater than 10
         //revoke the abilities first
         if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
-            Offence1.revoke(player);
-            Offence2.revoke(player);
+            AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/mercenary");
+            String[] subBranches = {"mercenary.Offence", "mercenary.Ninja", "mercenary.Defence"};
+            resetBranch(subBranches, player);
         }
-        AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/");
         player.sendMessage(Text.translatable("gui.ygasi.reset.success"), true);
         player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL)));
+    }
 
+    private static void resetBranch (String[] subBranches, ServerPlayerEntity player) {
+        for (String subBranch : subBranches) {
+            for (int i = 1; i < 4; i++) {
+                String branch = subBranch + i;
+                try {
+                    Class<?> branchClass = Class.forName("dev.mayaqq.ygasi.abilities." + branch);
+                    branchClass.getMethod("revoke", ServerPlayerEntity.class).invoke(null, player);
+
+                } catch (Exception e) {
+                    LOGGER.error(Arrays.toString(e.getStackTrace()));
+                }
+            }
+        }
     }
 }

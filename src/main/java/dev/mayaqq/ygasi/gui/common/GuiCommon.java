@@ -1,6 +1,7 @@
 package dev.mayaqq.ygasi.gui.common;
 
 import dev.mayaqq.ygasi.gui.BranchGui;
+import dev.mayaqq.ygasi.util.AdvUtils;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -39,6 +40,7 @@ public class GuiCommon {
         }
     }
     public static void setSkillSlot(SkillGui gui, ServerPlayerEntity player, int itemIndex, Item item, String nameKey, int cost, Class<?> skillClass, Class<?> guiClass) {
+        String advName = nameKey.split("\\.")[3];
         gui.setSlot(itemIndex, new GuiElementBuilder()
                 .setItem(item)
                 .hideFlag(ItemStack.TooltipSection.MODIFIERS)
@@ -48,11 +50,15 @@ public class GuiCommon {
                 .setCallback((index, clickType, actionType) -> {
                             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= cost) {
                                 try {
-                                    skillClass.getMethod("give", ServerPlayerEntity.class).invoke(null, player);
-                                    player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - cost);
-                                    guiClass.getMethod("gui", ServerPlayerEntity.class).invoke(null, player);
-                                    player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
-
+                                    if (AdvUtils.hasBeforeAdvancements(player, "minecraft", "ygasi/"+ advName)) {
+                                        skillClass.getMethod("give", ServerPlayerEntity.class).invoke(null, player);
+                                        player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - cost);
+                                        guiClass.getMethod("gui", ServerPlayerEntity.class).invoke(null, player);
+                                        player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                                    } else {
+                                        player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                                        player.sendMessage(Text.translatable("gui.ygasi.branches.no.previous"), true);
+                                    }
                                 } catch (Exception e) {
                                     throw new RuntimeException(e);
                                 }

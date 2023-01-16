@@ -74,6 +74,18 @@ public class BranchGui {
                 );
             }
 
+            for (int i = 13; i <=15; i += 2) {
+                gui.setSlot(i, new GuiElementBuilder()
+                        .setItem(Items.BARRIER)
+                        .setName(Text.translatable("gui.ygasi.branch.wip").formatted(Formatting.RED))
+                );
+            }
+            gui.setSlot(26, new GuiElementBuilder()
+                    .setItem(Items.BARRIER)
+                    .setName(Text.translatable("gui.ygasi.branch.wip").formatted(Formatting.RED))
+            );
+
+            /*
             //wizardry gui button
             if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry")) {
                 gui.setSlot(13, new GuiElementBuilder()
@@ -124,6 +136,7 @@ public class BranchGui {
                         .setCallback((index, clickType, actionType) -> ExtraGui.gui(player))
                 );
             }
+             */
 
             //info item button
             gui.setSlot(18, new GuiElementBuilder()
@@ -136,7 +149,7 @@ public class BranchGui {
             );
             //reset item button
             gui.setSlot(8, new GuiElementBuilder()
-                    .setItem(Items.BARRIER)
+                    .setItem(Items.TNT)
                     .setName(Text.translatable("gui.ygasi.branch.reset.title"))
                     .addLoreLine(Text.translatable("gui.ygasi.branch.reset.lore"))
                     .addLoreLine(Text.translatable("gui.ygasi.branch.reset.lore2"))
@@ -189,6 +202,7 @@ public class BranchGui {
                 Class<?> guiClass = BRANCH_TO_GUI.get(branch);
                 if (hasMercenary || hasWizadry || hasDrudiry) {
                     player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
+                    player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     player.closeHandledScreen();
                 } else {
                     AdvUtils.grantAdvancementCriterion(player, advancementId, advancementCriterion);
@@ -204,6 +218,7 @@ public class BranchGui {
             //if the player doesn't have enough skill points
             } else {
                 player.sendMessage(Text.translatable("gui.ygasi.branch.no.skill"), true);
+                player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 player.closeHandledScreen();
             }
         }
