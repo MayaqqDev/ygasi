@@ -54,7 +54,7 @@ public class ConfigRegistry {
         public int T1Cost = 5;
         public int T2Cost = 10;
         public int T3Cost = 15;
-        public int offence1DefIncrease = 3;
+        public int offence1DefIncrease = 1;
 
         public Config() {}
     }

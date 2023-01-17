@@ -14,7 +14,6 @@ public class Ygasi implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		//load the config data and register everything that needs to be registered on startup
-		//test
 		ConfigRegistry.load();
 		ItemRegistry.register();
 		StatRegistry.register();

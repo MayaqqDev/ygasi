@@ -61,8 +61,6 @@ public class ResetGui {
         gui.open();
     }
     public static void reset(ServerPlayerEntity player) {
-        //check if player experience level is greater than 10
-        //revoke the abilities first
         AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/root");
         if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
             AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/mercenary");
