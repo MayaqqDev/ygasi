@@ -1,0 +1,40 @@
+{
+  "parent": "ygasi:wizardry/wizardry",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:wizardry/wizardry"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_fight1": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.wizardry.fight1.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:blaze_powder"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.wizardry.fight1.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_fight1"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}

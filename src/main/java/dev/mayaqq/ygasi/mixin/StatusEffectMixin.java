@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.concurrent.TimeUnit;
 
-import static dev.mayaqq.ygasi.Ygasi.LOGGER;
 import static dev.mayaqq.ygasi.abilities.mercenary.Offence1.attackList;
 
 @Mixin(StatusEffect.class)
@@ -29,10 +28,9 @@ public abstract class StatusEffectMixin {
 
     @Inject(method = "onRemoved", at = @At("HEAD"))
     public void onUpdateStatusEffect(LivingEntity entity, AttributeContainer attributes, int amplifier, CallbackInfo ci) {
-        LOGGER.info("onRemovedTick");
         if (entity.isPlayer()) {
             ServerPlayerEntity player = (ServerPlayerEntity) entity;
-            if (this.getName() != null && this.getName().equals(StatusEffects.STRENGTH.getName()) && AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence1")) {
+            if (this.getName() != null && this.getName().equals(StatusEffects.STRENGTH.getName()) && AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/offence1")) {
                 Multithreading.schedule(() -> {
                     attackList.entrySet().removeIf(entry -> entry.getKey().startsWith(player.getUuidAsString()));
                     },4, TimeUnit.SECONDS);

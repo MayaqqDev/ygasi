@@ -15,7 +15,7 @@ public class ExtraGui {
     public static void gui(ServerPlayerEntity player) {
         String title = Text.translatable("gui.ygasi.branch.extra.title").getString() + " " + Text.translatable("gui.ygasi.branch.title", player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))).getString();
         try {
-            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/extra")) {
+            if (!AdvUtils.getAdvancementProgress(player, "ygasi", "extra/extra")) {
                 player.sendMessage(Text.translatable("gui.ygasi.branches.fail"), false);
                 BranchGui.gui(player);
             } else {

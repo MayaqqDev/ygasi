@@ -1,0 +1,40 @@
+{
+  "parent": "ygasi:root",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:root"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_druidry": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.druidry.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:oak_sapling"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.druidry.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_druidry"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}

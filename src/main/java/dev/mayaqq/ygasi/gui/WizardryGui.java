@@ -15,7 +15,7 @@ public class WizardryGui {
     public static void gui(ServerPlayerEntity player) {
         String title = Text.translatable("gui.ygasi.branch.wizardry.title").getString() + " " + Text.translatable("gui.ygasi.branch.title", player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS))).getString();
         try {
-            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry")) {
+            if (!AdvUtils.getAdvancementProgress(player, "ygasi", "wizardry/wizardry")) {
                 player.sendMessage(Text.translatable("gui.ygasi.branches.fail"), false);
                 BranchGui.gui(player);
             } else {

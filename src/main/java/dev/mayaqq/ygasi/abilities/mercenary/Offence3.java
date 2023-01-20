@@ -6,13 +6,13 @@ import net.minecraft.util.Identifier;
 
 public class Offence3 {
     public static void give(ServerPlayerEntity player) {
-        if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence3")) {
-            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/offence3"), "unlocked_offence3");
+        if (!AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/offence3")) {
+            AdvUtils.grantAdvancementCriterion(player, new Identifier("ygasi", "mercenary/offence3"), "unlocked_offence3");
         }
     }
     public static void revoke(ServerPlayerEntity player) {
-        if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence3")) {
-            AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/offence3");
+        if (AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/offence3")) {
+            AdvUtils.revokeAllAdvancements(player, "ygasi", "mercenary/offence3");
         }
     }
 }

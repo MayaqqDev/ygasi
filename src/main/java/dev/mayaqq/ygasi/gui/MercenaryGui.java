@@ -20,7 +20,7 @@ public class MercenaryGui {
     public static void gui(ServerPlayerEntity player) {
         String title = Text.translatable("gui.ygasi.branch.mercenary.title").getString() + " " + Text.translatable("gui.ygasi.branch.title", Text.of("§3" + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)))).getString();
         try {
-            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
+            if (!AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/mercenary")) {
                 player.sendMessage(Text.translatable("gui.ygasi.branches.fail"), true);
                 BranchGui.gui(player);
             } else {
@@ -39,8 +39,8 @@ public class MercenaryGui {
                 gui.setSlot(49, new GuiElementBuilder()
                         .setItem(Items.DIAMOND_BLOCK)
                         .setName(Text.translatable("gui.ygasi.branch.mercenary.title"))
-                        .addLoreLine(Text.translatable("gui.ygasi.branch.title", Text.of((String.valueOf(player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)))).formatted(Formatting.DARK_GRAY)))
-                ));
+                        .addLoreLine(Text.translatable("gui.ygasi.branch.title", Text.of("§3" + player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)))))
+                );
 
                 int[] positions = {38, 19, 1, 40, 22, 4, 42, 25, 7};
                 String[] advancementNames = {"offence1", "offence2", "offence3", "ninja1", "ninja2", "ninja3", "defence1", "defence2", "defence3"};
@@ -63,19 +63,19 @@ public class MercenaryGui {
                     int position = positions[i];
                     String advancementName = advancementNames[i];
                     String nameKey = nameKeys[i];
-                    if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/" + advancementName)) {
-                        if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence1") && (advancementName.startsWith("ninja") || advancementName.startsWith("defence"))) {
+                    if (!AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/" + advancementName)) {
+                        if (AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/offence1") && (advancementName.startsWith("ninja") || advancementName.startsWith("defence"))) {
                             GuiCommon.setDoneItem(gui, position, Items.BARRIER, nameKey, false);
                             GuiCommon.filler(gui, 50, false);
-                        } else if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/ninja1") && (advancementName.startsWith("defence") || advancementName.startsWith("offence"))) {
+                        } else if (AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/ninja1") && (advancementName.startsWith("defence") || advancementName.startsWith("offence"))) {
                             GuiCommon.setDoneItem(gui, position, Items.BARRIER, nameKey, false);
                             GuiCommon.filler(gui, 50, false);
                             GuiCommon.filler(gui, 48, false);
-                        } else if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/defence1") && (advancementName.startsWith("offence") || advancementName.startsWith("ninja"))) {
+                        } else if (AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/defence1") && (advancementName.startsWith("offence") || advancementName.startsWith("ninja"))) {
                             GuiCommon.setDoneItem(gui, position, Items.BARRIER, nameKey, false);
                             GuiCommon.filler(gui, 48, false);
                         } else {
-                            GuiCommon.setSkillSlot(gui, player, position, items[i], nameKey, costs[i], classes[i], MercenaryGui.class);
+                            GuiCommon.setSkillSlot(gui, player, position, items[i], nameKey, "mercenary/" + advancementName, costs[i], classes[i], MercenaryGui.class);
                         }
                         if (position - 9 >= 0) {
                             GuiCommon.filler(gui, position - 9, false);

@@ -1,0 +1,40 @@
+{
+  "parent": "ygasi:root",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:root"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_wizardry": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.wizardry.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:blaze_rod"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.wizardry.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_wizardry"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}

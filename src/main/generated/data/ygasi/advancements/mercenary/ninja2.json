@@ -1,0 +1,40 @@
+{
+  "parent": "ygasi:mercenary/ninja1",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:mercenary/ninja1"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_ninja2": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.mercenary.ninja2.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:bamboo"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.mercenary.ninja2.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_ninja2"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}

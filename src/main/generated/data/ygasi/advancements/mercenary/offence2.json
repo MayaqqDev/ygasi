@@ -1,0 +1,41 @@
+{
+  "parent": "ygasi:mercenary/offence1",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:mercenary/offence1"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_offence2": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.mercenary.offence2.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:iron_sword",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.mercenary.offence2.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_offence2"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}

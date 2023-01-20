@@ -1,0 +1,40 @@
+{
+  "parent": "ygasi:wizardry/element1",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:wizardry/element1"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_element2": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.wizardry.element2.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:fire_charge"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.wizardry.element2.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_element2"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}

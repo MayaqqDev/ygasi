@@ -1,0 +1,40 @@
+{
+  "parent": "ygasi:wizardry/fight2",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:wizardry/fight2"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_fight3": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.wizardry.fight3.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:blaze_powder"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.wizardry.fight3.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_fight3"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}

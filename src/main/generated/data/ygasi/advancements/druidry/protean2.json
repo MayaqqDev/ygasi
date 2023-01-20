@@ -1,0 +1,40 @@
+{
+  "parent": "ygasi:druidry/protean1",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:druidry/protean1"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_protean2": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.druidry.protean2.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:slime_ball"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.druidry.protean2.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_protean2"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}

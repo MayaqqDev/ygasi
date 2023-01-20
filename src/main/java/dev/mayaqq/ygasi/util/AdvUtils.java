@@ -1,5 +1,6 @@
 package dev.mayaqq.ygasi.util;
 
+import de.dafuqs.revelationary.api.advancements.AdvancementUtils;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.server.ServerAdvancementLoader;

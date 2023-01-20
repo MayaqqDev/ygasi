@@ -18,6 +18,8 @@ repositories {
 	maven { url 'https://maven.nucleoid.xyz' }
 	maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
 	maven { url 'https://jitpack.io' }
+	maven { url "https://maven.shedaniel.me/" }
+	maven { url "https://maven.terraformersmc.com/releases/" }
 }
 
 dependencies {
@@ -34,9 +36,13 @@ dependencies {
 	modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
 	modImplementation include("fr.catcore:server-translations-api:${project.sta_version}")
-	modImplementation ("com.github.DaFuqs:Revelationary:${project.revelationary_version}")
+	modImplementation("com.github.DaFuqs:Revelationary:${project.revelationary_version}")
+	modApi("me.shedaniel.cloth:cloth-config-fabric:9.0.94") {
+		exclude(group: "net.fabricmc.fabric-api")
+	}
+	modApi("com.terraformersmc:modmenu:5.0.2")
 
-	//runtime only for development
+		//runtime only for development
 	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.1.0")
 }
 

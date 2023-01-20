@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AdvancementRewardsMixin",
+    "ItemMixin",
     "PlayerEntityMixin",
     "StatusEffectMixin"
   ],

@@ -1,6 +1,6 @@
 package dev.mayaqq.ygasi.gui;
 
-import dev.mayaqq.ygasi.abilities.mercenary.*;
+import de.dafuqs.revelationary.api.advancements.AdvancementUtils;
 import dev.mayaqq.ygasi.gui.common.SkillGui;
 import dev.mayaqq.ygasi.registry.ConfigRegistry;
 import dev.mayaqq.ygasi.util.AdvUtils;
@@ -39,13 +39,11 @@ public class ResetGui {
                 .setCallback((index, clickType, actionType) -> {
                     if (player.experienceLevel >= ConfigRegistry.CONFIG.resetCost) {
                         reset(player);
-                        player.closeHandledScreen();
                         player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
                         player.experienceLevel -= ConfigRegistry.CONFIG.resetCost;
                         BranchGui.gui(player);
                     } else {
                         player.sendMessage(Text.translatable("gui.ygasi.reset.fail"), true);
-                        gui.close();
                         BranchGui.gui(player);
                     }
                 })
@@ -61,12 +59,12 @@ public class ResetGui {
         gui.open();
     }
     public static void reset(ServerPlayerEntity player) {
-        AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/root");
-        if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
-            AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/mercenary");
+        if (AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/mercenary")) {
+            AdvUtils.revokeAllAdvancements(player, "ygasi", "mercenary");
             String[] subBranches = {"mercenary.Offence", "mercenary.Ninja", "mercenary.Defence"};
             resetBranch(subBranches, player);
         }
+        AdvancementUtils.reprocessAdvancementUnlocks(player, "ygasi");
         player.sendMessage(Text.translatable("gui.ygasi.reset.success"), true);
         player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS_TOTAL)));
     }

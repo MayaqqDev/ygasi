@@ -58,8 +58,7 @@ public class ConfigGui {
                 .setCallback((index, clickType, actionType) -> {
                     ConfigRegistry.CONFIG.enableSkillBook = !ConfigRegistry.CONFIG.enableSkillBook;
                     player.playSound(SoundEvent.of(click), SoundCategory.PLAYERS, 1.0F, 1.0F);
-                    gui.close();
-                    gui(player, false);
+                    gui(player, fromBranch);
                 })
         );
 

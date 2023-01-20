@@ -57,14 +57,14 @@ public class BranchGui {
 
             //branch items
             //mercenary gui button
-            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary")) {
+            if (!AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/mercenary")) {
                 gui.setSlot(11, new GuiElementBuilder()
                         .setItem(Items.DIAMOND_SWORD)
                         .setCustomModelData(1)
                         .hideFlag(ItemStack.TooltipSection.MODIFIERS)
                         .addLoreLine(Text.translatable("gui.ygasi.branch.cost", cost))
                         .setName(Text.translatable("gui.ygasi.branch.mercenary.title").formatted(Formatting.BOLD))
-                        .setCallback((index, clickType, actionType) -> save(player, "mercenary", "gui.ygasi.branch.mercenary.title"))
+                        .setCallback((index, clickType, actionType) -> save(player, "mercenary/mercenary", "gui.ygasi.branch.mercenary.title"))
                 );
             } else {
                 gui.setSlot(11, new GuiElementBuilder()
@@ -89,7 +89,7 @@ public class BranchGui {
 
             /*
             //wizardry gui button
-            if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry")) {
+            if (!AdvUtils.getAdvancementProgress(player, "ygasi", "wizardry/wizardry")) {
                 gui.setSlot(13, new GuiElementBuilder()
                         .setItem(Items.BLAZE_ROD)
                         .addLoreLine(Text.translatable("gui.ygasi.branch.cost", cost))
@@ -173,7 +173,7 @@ public class BranchGui {
             }
 
             //grant the player the root advancement of ygasi
-            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/root"), "opened_skill_menu");
+            AdvUtils.grantAdvancementCriterion(player, new Identifier("ygasi", "root"), "opened_skill_menu");
 
             gui.open();
         } catch (Exception e) {
@@ -182,15 +182,15 @@ public class BranchGui {
     }
     //this happens when you try to unlock a branch
     public static void save(ServerPlayerEntity player, String branch, String branchName) {
-        boolean hasMercenary = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/mercenary");
-        boolean hasWizadry = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/wizardry");
-        boolean hasDrudiry = AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/druidry");
+        boolean hasMercenary = AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/mercenary");
+        boolean hasWizadry = AdvUtils.getAdvancementProgress(player, "ygasi", "wizardry/wizardry");
+        boolean hasDrudiry = AdvUtils.getAdvancementProgress(player, "ygasi", "druidry/druidry");
         //special category for extra branch because it's half the price
         if (branch.equals("extra")) {
             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost / 2) {
                 //remove the spent skill points
                 player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - ConfigRegistry.CONFIG.branchCost / 2);
-                AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/extra"), "unlocked_extra");
+                AdvUtils.grantAdvancementCriterion(player, new Identifier("ygasi", "extra/extra"), "unlocked_extra");
                 player.sendMessage(Text.translatable("gui.ygasi.branch.unlock", Text.translatable(branchName)), false);
                 ExtraGui.gui(player);
             } else {
@@ -201,19 +201,19 @@ public class BranchGui {
             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= ConfigRegistry.CONFIG.branchCost) {
                 //grant the player the advancement of the branch they unlocked
                 final Map<String, Class<?>> BRANCH_TO_GUI = new HashMap<>() {{
-                    put("mercenary", MercenaryGui.class);
-                    put("wizardry", WizardryGui.class);
-                    put("druidry", DruidryGui.class);
+                    put("mercenary/mercenary", MercenaryGui.class);
+                    put("wizardry/wizardry", WizardryGui.class);
+                    put("druidry/druidry", DruidryGui.class);
                 }};
 
-                Identifier advancementId = new Identifier("minecraft", "ygasi/" + branch);
+                Identifier advancementId = new Identifier("ygasi", branch);
                 Class<?> guiClass = BRANCH_TO_GUI.get(branch);
                 if (hasMercenary || hasWizadry || hasDrudiry) {
                     player.sendMessage(Text.translatable("gui.ygasi.branch.no.unlock"), true);
                     player.playSound(SoundEvents.BLOCK_ANVIL_BREAK, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     player.closeHandledScreen();
                 } else {
-                    AdvUtils.grantAdvancementCriterion(player, advancementId, "unlocked_" + branch);
+                    AdvUtils.grantAdvancementCriterion(player, advancementId, "unlocked_" + branch.split("/")[0]);
                     unlockSuccess(player, branchName);
                     try {
                         Method guiMethod = guiClass.getMethod("gui", ServerPlayerEntity.class);

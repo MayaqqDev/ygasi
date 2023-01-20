@@ -39,18 +39,17 @@ public class GuiCommon {
             );
         }
     }
-    public static void setSkillSlot(SkillGui gui, ServerPlayerEntity player, int itemIndex, Item item, String nameKey, int cost, Class<?> skillClass, Class<?> guiClass) {
-        String advName = nameKey.split("\\.")[3];
+    public static void setSkillSlot(SkillGui gui, ServerPlayerEntity player, int itemIndex, Item item, String nameKey, String advName ,int cost, Class<?> skillClass, Class<?> guiClass) {
         gui.setSlot(itemIndex, new GuiElementBuilder()
                 .setItem(item)
                 .hideFlag(ItemStack.TooltipSection.MODIFIERS)
                 .setName(Text.translatable(nameKey))
                 .addLoreLine(Text.translatable(nameKey + ".lore"))
-                .addLoreLine(Text.translatable("gui.ygasi.branch.cost", Text.of("§8" + cost)))
+                .addLoreLine(Text.translatable("gui.ygasi.branch.cost", Text.of("§3" + cost)))
                 .setCallback((index, clickType, actionType) -> {
                             if (player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) >= cost) {
                                 try {
-                                    if (AdvUtils.hasBeforeAdvancements(player, "minecraft", "ygasi/"+ advName)) {
+                                    if (AdvUtils.hasBeforeAdvancements(player, "ygasi", advName)) {
                                         skillClass.getMethod("give", ServerPlayerEntity.class).invoke(null, player);
                                         player.getStatHandler().setStat(player, Stats.CUSTOM.getOrCreateStat(SKILL_POINTS), player.getStatHandler().getStat(Stats.CUSTOM.getOrCreateStat(SKILL_POINTS)) - cost);
                                         guiClass.getMethod("gui", ServerPlayerEntity.class).invoke(null, player);

@@ -12,13 +12,13 @@ public class Offence1 {
     public static Map<String, Boolean> attackList = new HashMap<>();
 
     public static void give(ServerPlayerEntity player) {
-        if (!AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence1")) {
-            AdvUtils.grantAdvancementCriterion(player, new Identifier("minecraft", "ygasi/offence1"), "unlocked_offence1");
+        if (!AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/offence1")) {
+            AdvUtils.grantAdvancementCriterion(player, new Identifier("ygasi", "mercenary/offence1"), "unlocked_offence1");
         }
     }
     public static void revoke(ServerPlayerEntity player) {
-        if (AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence1")) {
-            AdvUtils.revokeAllAdvancements(player, "minecraft", "ygasi/offence1");
+        if (AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/offence1")) {
+            AdvUtils.revokeAllAdvancements(player, "ygasi", "mercenary/offence1");
         }
     }
 }

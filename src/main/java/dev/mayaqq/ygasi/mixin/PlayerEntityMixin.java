@@ -22,7 +22,7 @@ public abstract class PlayerEntityMixin {
     public void onAttack(Entity target, CallbackInfo ci) {
         if (this.isPlayer()) {
             ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-            if (!attackList.containsKey(player.getUuidAsString() + target.getUuidAsString()) && AdvUtils.getAdvancementProgress(player, "minecraft", "ygasi/offence1")) {
+            if (!attackList.containsKey(player.getUuidAsString() + target.getUuidAsString()) && AdvUtils.getAdvancementProgress(player, "ygasi", "mercenary/offence1")) {
                 attackList.put(player.getUuidAsString() + target.getUuidAsString(), true);
                 StatusEffectInstance currentEffect = player.getStatusEffect(StatusEffects.STRENGTH);
                 int currentLevel = currentEffect != null ? currentEffect.getAmplifier() : 0;

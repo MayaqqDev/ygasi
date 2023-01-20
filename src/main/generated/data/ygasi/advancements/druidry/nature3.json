@@ -1,0 +1,40 @@
+{
+  "parent": "ygasi:druidry/nature2",
+  "criteria": {
+    "gotten_previous": {
+      "conditions": {
+        "advancement_identifier": "ygasi:druidry/nature2"
+      },
+      "trigger": "revelationary:advancement_gotten"
+    },
+    "unlocked_nature3": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.ygasi.druidry.nature3.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:grass_block"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ygasi.druidry.nature3.title"
+    }
+  },
+  "requirements": [
+    [
+      "unlocked_nature3"
+    ],
+    [
+      "gotten_previous"
+    ]
+  ],
+  "rewards": {
+    "experience": 1
+  }
+}
