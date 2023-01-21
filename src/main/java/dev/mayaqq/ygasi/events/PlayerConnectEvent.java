@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import java.util.UUID;
 
 import static dev.mayaqq.ygasi.abilities.mercenary.Offence2.playerSwords;
+import static dev.mayaqq.ygasi.events.TickEvent.swords;
 import static dev.mayaqq.ygasi.registry.ItemRegistry.SKILL_BOOK;
 
 public class PlayerConnectEvent {
@@ -28,6 +29,7 @@ public class PlayerConnectEvent {
                     sword.remove(Entity.RemovalReason.DISCARDED);
                 });
                 playerSwords.remove(handler.player.getUuidAsString());
+                swords.remove(handler.player.getUuidAsString());
             }
         });
     }

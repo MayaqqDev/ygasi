@@ -15,8 +15,9 @@ import java.util.UUID;
 
 import static dev.mayaqq.ygasi.Ygasi.LOGGER;
 import static dev.mayaqq.ygasi.abilities.mercenary.Offence2.playerSwords;
+import static dev.mayaqq.ygasi.abilities.mercenary.Offence2.playerSwordsBlacklist;
 
-public class ClickEvent {
+public class TickEvent {
     public static Map<String, Integer> playerCharge = new HashMap<>();
     public static Map<String, Integer> swords = new HashMap<>();
     private static Integer tick = 0;
@@ -24,9 +25,9 @@ public class ClickEvent {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             tick++;
             server.getPlayerManager().getPlayerList().forEach(player -> {
-                if (playerSwords.get(player.getUuidAsString()) != null && player.getWorld().getEntity(UUID.fromString(playerSwords.get(player.getUuidAsString()).get(0))) != null) {
+                if (playerSwords.get(player.getUuidAsString()) != null && playerSwordsBlacklist.get(player.getUuidAsString()) == null) {
                     playerSwords.get(player.getUuidAsString()).forEach(uuid -> {
-                        player.getWorld().getEntity(UUID.fromString(uuid)).setPos(player.getX(), player.getY(), player.getZ());
+                        player.getWorld().getEntity(UUID.fromString(uuid)).setPos(player.getX(), player.getY() + 2, player.getZ());
                     });
                 }
                 if (tick == 20) {
@@ -38,7 +39,7 @@ public class ClickEvent {
                             playerCharge.remove(player.getUuidAsString());
 
                             swords.put(player.getUuidAsString(), swords.getOrDefault(player.getUuidAsString(), 0) + 1);
-                            Offence2.summonStand((ServerPlayerEntity) player, swords.get(player.getUuidAsString()));
+                            Offence2.summonStand(player, swords.get(player.getUuidAsString()));
                             player.playSound(SoundEvent.of(new Identifier("entity.experience_orb.pickup")), SoundCategory.PLAYERS, 1.0F, 1.0F);
                             LOGGER.info("Sword charge: " + swords.get(player.getUuidAsString()));
                         } else {
