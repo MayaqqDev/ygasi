@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -65,14 +66,14 @@ public class ItemMixin {
                         for (BlockPos relativeBlockPos : relativeBlockPositions) {
                             BlockPos blockPos = pos.add(relativeBlockPos);
                             Block block = sword.world.getBlockState(blockPos).getBlock();
-                            if(block != Blocks.AIR) {
+                            if(block != Blocks.AIR && hitTarget) {
                                 LOGGER.info("Sword hit a block!");
                                 hitTarget = onHit(serverWorld, player, sword, hitTarget);
                                 isAir = false;
                             }
                             double entityCheckRadius = 1;
                             for (PlayerEntity pl : world.getPlayers()) {
-                                if (pl.distanceTo(sword) <= entityCheckRadius && pl != player && pl.getScoreboardTeam() != player.getScoreboardTeam()) {
+                                if (pl.distanceTo(sword) <= entityCheckRadius && pl != player && pl.getScoreboardTeam() != player.getScoreboardTeam() && hitTarget) {
                                     LOGGER.info("Sword hit a player!");
                                     //create an explosion at the position of the sword
                                     hitTarget = onHit(serverWorld, player, sword, hitTarget);
@@ -98,7 +99,8 @@ public class ItemMixin {
     }
     public boolean onHit(ServerWorld world, ServerPlayerEntity player, ArmorStandEntity sword, Boolean hitTraget) {
         if (hitTraget) {
-            world.createExplosion(player, DamageSource.player(player), null, sword.getX(), sword.getY(), sword.getZ(), 10, false, World.ExplosionSourceType.MOB, false);
+            LOGGER.info("Sword hit a target!");
+            world.createExplosion(sword, sword.getX(), sword.getY(), sword.getZ(), 1, World.ExplosionSourceType.NONE);
             sword.remove(Entity.RemovalReason.DISCARDED);
             return false;
         }
