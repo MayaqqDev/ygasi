@@ -1,37 +1,30 @@
+import com.modrinth.minotaur.dependencies.ModDependency
+
 plugins {
-	id 'fabric-loom' version '1.0-SNAPSHOT'
-	id 'maven-publish'
-	id "com.modrinth.minotaur" version "2.+"
+    id 'fabric-loom' version '1.0-SNAPSHOT'
+    id 'maven-publish'
+    id 'com.modrinth.minotaur' version '2.+'
+    id 'io.github.juuxel.loom-quiltflower' version '1.8.0'
 }
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-DuplicatesStrategy.INCLUDE
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
 repositories {
-	//maven repos
-	maven { url 'https://maven.nucleoid.xyz' }
-	maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
-	maven { url 'https://jitpack.io' }
-	maven { url "https://maven.shedaniel.me/" }
-	maven { url "https://maven.terraformersmc.com/releases/" }
+    maven { url 'https://maven.nucleoid.xyz' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.shedaniel.me/' }
+    maven { url 'https://maven.terraformersmc.com/releases/' }
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	//external dependencies
 	modImplementation include("eu.pb4:sgui:${project.sgui_version}")
 	modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
 	modImplementation include("eu.pb4:polymer-resource-pack:${project.polymer_version}")
@@ -41,9 +34,6 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	modApi("com.terraformersmc:modmenu:5.0.2")
-
-		//runtime only for development
-	modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.1.0")
 }
 
 processResources {
@@ -55,19 +45,14 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-	it.options.release = 17
+    it.options.release.set(17)
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 }
 
 jar {
-	from file('src/main/generated')
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
@@ -80,20 +65,13 @@ publishing {
 			from components.java
 		}
 	}
-
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
 }
 
 loom {
+    serverOnlyMinecraftJar()
 	log4jConfigs.from(file("log4j2.xml"))
 	runs {
-		//datagen
+        // datagen
 		datagen {
 			server()
 
@@ -108,7 +86,7 @@ loom {
 }
 
 sourceSets {
-	//add resources to the compiled jar
+    // add resources to the compiled jar
 	main {
 		resources {
 			srcDirs += [
@@ -118,7 +96,6 @@ sourceSets {
 	}
 }
 
-import com.modrinth.minotaur.dependencies.ModDependency
 
 modrinth {
 	token = System.getenv('MODRINTH_TOKEN') // Please use an environment variable for this! The default is `$MODRINTH_TOKEN`.
